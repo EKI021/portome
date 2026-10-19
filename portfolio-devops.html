@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Eki Rinaldo — DevOps Engineer Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+<style>
+:root{
+  --bg:#0a0e27;--bg2:#0f1435;--bg3:#151a3d;
+  --primary:#00d9ff;--secondary:#0066ff;--accent:#7c3aed;
+  --success:#10b981;--warning:#f59e0b;--danger:#ef4444;
+  --text:#e2e8f0;--text-dim:#94a3b8;--text-dark:#64748b;
+  --glow:0 0 20px rgba(0,217,255,.3),0 0 40px rgba(0,217,255,.1);
+  --font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:hidden;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 20% 50%,rgba(0,102,255,.08) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(124,58,237,.08) 0%,transparent 50%);pointer-events:none;z-index:0}
+#particles{position:fixed;inset:0;z-index:0;opacity:.4}
+.cglow{position:fixed;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(0,217,255,.08) 0%,transparent 70%);pointer-events:none;transform:translate(-50%,-50%);z-index:1;transition:all .3s ease}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;background:rgba(10,14,39,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,217,255,.1);display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:800;font-size:1.3rem;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:var(--text-dim);text-decoration:none;font-size:.9rem;font-weight:500;transition:all .3s;position:relative}
+.nav-links a::after{content:"";position:absolute;bottom:-4px;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--primary),var(--secondary));transition:width .3s}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;padding:120px 40px 60px}
+.hero-content{max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-text h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:800;line-height:1.1;margin-bottom:20px}
+.hero-text h1 .gradient{background:linear-gradient(135deg,var(--primary),var(--secondary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.hero-text .role{font-size:1.3rem;color:var(--primary);font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.hero-text .role::before{content:"";width:40px;height:2px;background:linear-gradient(90deg,var(--primary),var(--secondary))}
+.hero-text p{font-size:1.1rem;color:var(--text-dim);margin-bottom:32px;max-width:500px}
+.hero-stats{display:flex;gap:32px;margin-bottom:40px}
+.stat{display:flex;flex-direction:column}
+.stat .num{font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat .label{font-size:.85rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:12px;font-weight:600;text-decoration:none;transition:all .3s;cursor:pointer;border:none;font-family:var(--font);font-size:.95rem}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;box-shadow:0 4px 20px rgba(0,217,255,.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,217,255,.5)}
+.btn-secondary{background:rgba(0,217,255,.1);color:var(--primary);border:1px solid rgba(0,217,255,.3)}
+.btn-secondary:hover{background:rgba(0,217,255,.2);transform:translateY(-2px)}
+.hero-visual{position:relative;height:500px;display:flex;align-items:center;justify-content:center}
+.terminal-window{width:100%;max-width:500px;background:var(--bg2);border-radius:16px;border:1px solid rgba(0,217,255,.2);box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+.terminal-header{background:var(--bg3);padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(0,217,255,.1)}
+.terminal-dot{width:12px;height:12px;border-radius:50%}
+.terminal-dot.red{background:#ff5f56}.terminal-dot.yellow{background:#ffbd2e}.terminal-dot.green{background:#27c93f}
+.terminal-title{flex:1;text-align:center;color:var(--text-dim);font-size:.85rem;font-family:var(--mono)}
+.terminal-body{padding:24px;font-family:var(--mono);font-size:.9rem;line-height:1.8}
+.terminal-line{opacity:0;animation:fadeIn .5s forwards}
+.terminal-line .prompt{color:var(--primary)}
+.terminal-line .cmd{color:var(--text)}
+.terminal-line .output{color:var(--success)}
+@keyframes fadeIn{to{opacity:1}}
+.terminal-line:nth-child(1){animation-delay:.3s}
+.terminal-line:nth-child(2){animation-delay:.8s}
+.terminal-line:nth-child(3){animation-delay:1.3s}
+.terminal-line:nth-child(4){animation-delay:1.8s}
+.terminal-line:nth-child(5){animation-delay:2.3s}
+.terminal-line:nth-child(6){animation-delay:2.8s}
+.terminal-line:nth-child(7){animation-delay:3.3s}
+section.blk{position:relative;z-index:2;padding:100px 40px;max-width:1200px;margin:0 auto}
+.stitle{font-size:clamp(2rem,4vw,3rem);font-weight:800;margin-bottom:12px;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ssub{color:var(--text-dim);font-size:1.1rem;margin-bottom:50px}
+.rv{opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s}.rv.in{opacity:1;transform:translateY(0)}
+
+.nav-links a:hover{color:var(--primary)}.nav-links a:hover::after{width:100%}
+.menu-t{display:none;background:none;border:none;color:var(--primary);font-size:1.5rem;cursor:pointer}
+
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start}
+.about-text p{margin-bottom:18px;color:var(--text-dim);font-size:1.05rem;line-height:1.8}
+.about-text .hl{color:var(--primary);font-weight:600}
+.metrics-card{background:var(--bg2);border:1px solid rgba(0,217,255,.15);border-radius:16px;padding:32px;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+.metrics-card h3{color:var(--primary);margin-bottom:24px;font-size:1.2rem;display:flex;align-items:center;gap:10px}
+.metric-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(0,217,255,.08)}
+.metric-row:last-child{border:none}
+.metric-row .label{color:var(--text-dim);font-size:.9rem}
+.metric-row .bar-container{flex:1;margin:0 16px;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.metric-row .bar{height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:4px;width:var(--w,0%);animation:barGrow 1.5s ease-out forwards;box-shadow:0 0 10px rgba(0,217,255,.5)}
+@keyframes barGrow{from{width:0}}
+.metric-row .value{color:var(--primary);font-weight:600;font-size:.9rem}
+
+.sgrp{margin-bottom:60px}
+.sgrp h3{color:var(--text);margin-bottom:24px;font-size:1.3rem;display:flex;align-items:center;gap:12px}
+.sgrp h3 i{color:var(--primary);font-size:1.5rem}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:20px}
+.sk{background:var(--bg2);border:1px solid rgba(0,217,255,.1);border-radius:12px;padding:24px 16px;text-align:center;cursor:pointer;position:relative;overflow:hidden;transition:all .4s cubic-bezier(.2,.9,.3,1.2)}
+.sk::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,217,255,.05),rgba(124,58,237,.05));opacity:0;transition:opacity .4s}
+.sk:hover{transform:translateY(-8px) scale(1.02);border-color:var(--primary);box-shadow:0 12px 40px rgba(0,217,255,.2)}
+.sk:hover::before{opacity:1}
+.sk .ic{font-size:3rem;display:block;margin-bottom:14px;transition:transform .6s;filter:drop-shadow(0 4px 12px rgba(0,217,255,.3))}
+.sk:hover .ic{transform:scale(1.15) rotate(5deg)}
+.sk .nm{font-size:.9rem;color:var(--text);font-weight:600;margin-bottom:8px}
+.sk .lv{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.topology-container{background:var(--bg2);border:1px solid rgba(0,217,255,.15);border-radius:20px;padding:40px;position:relative;overflow:hidden;min-height:600px}
+.topology-title{text-align:center;margin-bottom:40px}
+.topology-title h3{color:var(--primary);font-size:1.8rem;margin-bottom:8px}
+.topology-title p{color:var(--text-dim)}
+.topology-svg{width:100%;height:500px;position:relative}
+.node{position:absolute;transition:all .3s}
+.node-circle{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.5rem;box-shadow:0 0 30px rgba(0,217,255,.4);animation:pulse 2s infinite;cursor:pointer}
+@keyframes pulse{0%,100%{box-shadow:0 0 30px rgba(0,217,255,.4)}50%{box-shadow:0 0 50px rgba(0,217,255,.6)}}
+.node:hover .node-circle{transform:scale(1.15)}
+.node-label{position:absolute;top:70px;left:50%;transform:translateX(-50%);color:var(--text);font-size:.85rem;font-weight:600;white-space:nowrap;background:var(--bg3);padding:4px 12px;border-radius:6px;border:1px solid rgba(0,217,255,.2)}
+.connection{position:absolute;height:2px;background:linear-gradient(90deg,var(--primary),var(--secondary));transform-origin:left center;animation:flowLine 2s linear infinite}
+@keyframes flowLine{0%{opacity:.3}50%{opacity:1}100%{opacity:.3}}
+
+.ansible-container{background:var(--bg2);border:1px solid rgba(0,217,255,.15);border-radius:20px;padding:40px;position:relative;overflow:hidden}
+.ansible-header{text-align:center;margin-bottom:40px}
+.ansible-header h3{color:var(--primary);font-size:1.8rem;margin-bottom:8px}
+.ansible-header p{color:var(--text-dim)}
+.ansible-visual{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;margin-bottom:40px}
+.control-node{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--secondary));display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;box-shadow:0 0 50px rgba(124,58,237,.5);animation:controlPulse 2s infinite;position:relative}
+@keyframes controlPulse{0%,100%{transform:scale(1);box-shadow:0 0 50px rgba(124,58,237,.5)}50%{transform:scale(1.05);box-shadow:0 0 70px rgba(124,58,237,.7)}}
+.control-node i{font-size:2.5rem;margin-bottom:8px}
+.control-node span{font-size:.85rem;font-weight:600}
+.managed-nodes{display:grid;grid-template-columns:repeat(10,1fr);gap:8px;max-width:400px}
+.managed-node{width:30px;height:30px;border-radius:6px;background:var(--bg3);border:1px solid rgba(0,217,255,.2);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--text-dim);transition:all .3s;animation:nodeActivate 3s infinite}
+@keyframes nodeActivate{0%,100%{background:var(--bg3);border-color:rgba(0,217,255,.2)}50%{background:rgba(0,217,255,.2);border-color:var(--primary);box-shadow:0 0 15px rgba(0,217,255,.4)}}
+.managed-node:nth-child(2n){animation-delay:.1s}
+.managed-node:nth-child(3n){animation-delay:.2s}
+.managed-node:nth-child(4n){animation-delay:.3s}
+.managed-node:nth-child(5n){animation-delay:.4s}
+.ansible-command{background:var(--bg3);border:1px solid rgba(0,217,255,.2);border-radius:12px;padding:20px;font-family:var(--mono);font-size:.9rem;color:var(--text-dim)}
+.ansible-command .prompt{color:var(--primary)}
+.ansible-command .cmd{color:var(--success)}
+
+.timeline{position:relative;padding-left:40px}
+.timeline::before{content:"";position:absolute;left:15px;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--primary),var(--secondary),var(--accent))}
+.tli{position:relative;margin-bottom:50px;padding-left:30px}
+.tli::before{content:"";position:absolute;left:-32px;top:8px;width:20px;height:20px;border-radius:50%;background:var(--bg);border:3px solid var(--primary);box-shadow:0 0 20px rgba(0,217,255,.5);animation:dotPulse 2s infinite}
+@keyframes dotPulse{0%,100%{box-shadow:0 0 20px rgba(0,217,255,.5)}50%{box-shadow:0 0 30px rgba(0,217,255,.8)}}
+.thd{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:12px}
+.thd h4{color:var(--primary);font-size:1.2rem}
+.thd .wh{color:var(--text-dim);font-size:.9rem;background:var(--bg2);padding:4px 14px;border-radius:20px;border:1px solid rgba(0,217,255,.2)}
+.tco{color:var(--secondary);font-size:1rem;margin-bottom:16px;font-weight:600}
+.tlist{list-style:none}
+.tlist li{padding:8px 0 8px 28px;position:relative;color:var(--text-dim);font-size:.95rem}
+.tlist li::before{content:"▹";position:absolute;left:0;top:8px;color:var(--primary);font-size:1.2rem}
+
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:28px}
+.proj{background:var(--bg2);border:1px solid rgba(0,217,255,.1);border-radius:16px;padding:32px;position:relative;overflow:hidden;transition:all .4s}
+.proj::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--secondary),var(--accent));background-size:200% 100%;animation:gradientMove 3s linear infinite}
+@keyframes gradientMove{to{background-position:-200% 0}}
+.proj:hover{transform:translateY(-8px);border-color:var(--primary);box-shadow:0 20px 50px rgba(0,217,255,.15)}
+.proj .pn{color:var(--text-dark);font-size:.85rem;margin-bottom:12px;font-family:var(--mono)}
+.proj h4{color:var(--primary);margin-bottom:16px;font-size:1.2rem;display:flex;align-items:center;gap:10px}
+.proj h4 i{font-size:1.4rem}
+.proj p{color:var(--text-dim);font-size:.95rem;margin-bottom:20px;line-height:1.7}
+.proj .stk{display:flex;flex-wrap:wrap;gap:8px}
+.proj .stk span{font-size:.8rem;padding:6px 14px;border-radius:20px;border:1px solid rgba(0,217,255,.2);color:var(--primary);background:rgba(0,217,255,.05);font-weight:500}
+
+.egrid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.ecard{background:var(--bg2);border:1px solid rgba(0,217,255,.1);border-radius:16px;padding:28px}
+.ecard h4{color:var(--primary);margin-bottom:16px;font-size:1.1rem;display:flex;align-items:center;gap:10px}
+.ecard h4 i{font-size:1.3rem}
+.ecard .meta{color:var(--text-dim);font-size:.9rem;margin-bottom:12px}
+.clist{list-style:none}
+.clist li{padding:12px 0 12px 32px;border-bottom:1px solid rgba(0,217,255,.08);position:relative;font-size:.95rem}
+.clist li:last-child{border:none}
+.clist li::before{content:"\f0a3";font-family:"Font Awesome 6 Free";font-weight:900;position:absolute;left:0;top:14px;color:var(--primary)}
+.clist .iss{color:var(--text-dark);font-size:.85rem;display:block;margin-top:4px}
+
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:40px}
+.ccard{background:var(--bg2);border:1px solid rgba(0,217,255,.1);border-radius:16px;padding:32px;text-align:center;text-decoration:none;color:var(--text);transition:all .4s;position:relative;overflow:hidden}
+.ccard::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,rgba(0,217,255,.1),transparent 70%);opacity:0;transition:opacity .4s}
+.ccard:hover{transform:translateY(-6px);border-color:var(--primary);box-shadow:0 15px 40px rgba(0,217,255,.2)}
+.ccard:hover::after{opacity:1}
+.ccard i{font-size:2.5rem;color:var(--primary);margin-bottom:16px;display:block;animation:float 3s ease-in-out infinite}
+.ccard .lab{font-size:.85rem;color:var(--text-dim);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
+.ccard .val{font-size:1rem;font-weight:600;word-break:break-all}
+
+footer{text-align:center;padding:50px 20px;color:var(--text-dim);font-size:.9rem;border-top:1px solid rgba(0,217,255,.1);position:relative;z-index:2;background:rgba(10,14,39,.6);margin-top:60px}
+footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+@media (max-width:968px){
+  .hero-content{grid-template-columns:1fr;gap:40px}
+  .hero-visual{height:400px}
+  .about-grid,.egrid{grid-template-columns:1fr}
+  .ansible-visual{flex-direction:column}
+  .managed-nodes{grid-template-columns:repeat(8,1fr)}
+  section.blk{padding:70px 20px}
+  .nav{padding:14px 20px}
+  .nav-links{position:fixed;top:70px;right:-100%;flex-direction:column;background:rgba(10,14,39,.98);width:80%;height:calc(100vh - 70px);padding:40px 30px;transition:right .4s;border-left:1px solid rgba(0,217,255,.1)}
+  .nav-links.open{right:0}
+  .menu-t{display:block}
+}
+
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+<div class="cglow" id="cglow"></div>
+
+<nav class="nav">
+  <div class="nav-logo">Eki Rinaldo</div>
+  <button class="menu-t" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#topology">Topology</a></li>
+    <li><a href="#ansible">Automation</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="role">DevOps Engineer</div>
+      <h1>Hi, I'm <span class="gradient">Eki Rinaldo</span></h1>
+      <p>Cloud & DevOps Engineer | IT Infrastructure Specialist with 4+ years of experience building scalable infrastructure, automating deployments, and managing complex network environments.</p>
+      <div class="hero-stats">
+        <div class="stat"><div class="num">4+</div><div class="label">Years Exp</div></div>
+        <div class="stat"><div class="num">140+</div><div class="label">Servers Managed</div></div>
+        <div class="stat"><div class="num">99.9%</div><div class="label">Uptime</div></div>
+      </div>
+      <div class="hero-btns">
+        <a href="#skills" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> View Skills</a>
+        <a href="#contact" class="btn btn-secondary"><i class="fa-solid fa-envelope"></i> Contact Me</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <span class="terminal-dot red"></span>
+          <span class="terminal-dot yellow"></span>
+          <span class="terminal-dot green"></span>
+          <div class="terminal-title">eki@devops:~</div>
+        </div>
+        <div class="terminal-body">
+          <div class="terminal-line"><span class="prompt">$ </span><span class="cmd">ansible-playbook deploy.yml</span></div>
+          <div class="terminal-line"><span class="output">PLAY [Deploy to production]</span></div>
+          <div class="terminal-line"><span class="output">TASK [Gathering Facts]</span></div>
+          <div class="terminal-line"><span class="output">TASK [Deploy application]</span></div>
+          <div class="terminal-line"><span class="output">changed: [server-01]</span></div>
+          <div class="terminal-line"><span class="output">changed: [server-02]</span></div>
+          <div class="terminal-line"><span class="output">PLAY RECAP: ok=140 failed=0</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="about">
+  <h2 class="stitle rv">About Me</h2>
+  <p class="ssub rv">Result-driven Cloud & DevOps Engineer</p>
+  <div class="about-grid">
+    <div class="about-text rv">
+      <p><span class="hl">Cloud & DevOps Engineer</span> and IT Infrastructure Specialist with <span class="hl">4 years</span> of comprehensive experience — encompassing <span class="hl">3 years</span> of IT Support Leadership and <span class="hl">1 year</span> of focused Cloud & DevOps engineering.</p>
+      <p>Proven expertise in designing <span class="hl">private cloud environments</span> (OpenStack, MicroCloud), <span class="hl">Infrastructure as Code</span> (Ansible), and <span class="hl">CI/CD automation</span> (GitHub Actions, Jenkins).</p>
+      <p>Adept at bridging development and operations, managing complex network infrastructures (MikroTik), and developing custom full-stack business solutions (IoT, POS).</p>
+    </div>
+    <div class="metrics-card rv">
+      <h3><i class="fa-solid fa-chart-line"></i> Performance Metrics</h3>
+      <div class="metric-row"><span class="label">Cloud & DevOps</span><div class="bar-container"><div class="bar" style="--w:90%"></div></div><span class="value">90%</span></div>
+      <div class="metric-row"><span class="label">Linux / SysAdmin</span><div class="bar-container"><div class="bar" style="--w:95%"></div></div><span class="value">95%</span></div>
+      <div class="metric-row"><span class="label">Networking</span><div class="bar-container"><div class="bar" style="--w:88%"></div></div><span class="value">88%</span></div>
+      <div class="metric-row"><span class="label">Automation</span><div class="bar-container"><div class="bar" style="--w:92%"></div></div><span class="value">92%</span></div>
+      <div class="metric-row"><span class="label">Fullstack Dev</span><div class="bar-container"><div class="bar" style="--w:80%"></div></div><span class="value">80%</span></div>
+      <div class="metric-row"><span class="label">Security</span><div class="bar-container"><div class="bar" style="--w:85%"></div></div><span class="value">85%</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="skills">
+  <h2 class="stitle rv">Technical Skills</h2>
+  <p class="ssub rv">Technologies and tools I work with</p>
+
+  <div class="sgrp rv">
+    <h3><i class="fa-solid fa-robot"></i> DevOps & Automation</h3>
+    <div class="sgrid">
+      <div class="sk"><i class="devicon-ansible-plain ic" style="color:#ee0000"></i><div class="nm">Ansible</div><div class="lv" style="--w:95%"></div></div>
+      <div class="sk"><i class="devicon-github-original ic" style="color:#fff"></i><div class="nm">GitHub Actions</div><div class="lv" style="--w:90%"></div></div>
+      <div class="sk"><i class="devicon-jenkins-plain ic" style="color:#d24939"></i><div class="nm">Jenkins</div><div class="lv" style="--w:85%"></div></div>
+      <div class="sk"><i class="devicon-docker-plain ic" style="color:#2496ed"></i><div class="nm">Docker</div><div class="lv" style="--w:90%"></div></div>
+      <div class="sk"><i class="fa-solid fa-shield-halved ic" style="color:var(--primary)"></i><div class="nm">Mass Hardening</div><div class="lv" style="--w:92%"></div></div>
+    </div>
+  </div>
+
+  <div class="sgrp rv">
+    <h3><i class="fa-solid fa-cloud"></i> Cloud & Virtualization</h3>
+    <div class="sgrid">
+      <div class="sk"><i class="fa-solid fa-cloud-bolt ic" style="color:#ee3f3f"></i><div class="nm">OpenStack</div><div class="lv" style="--w:92%"></div></div>
+      <div class="sk"><i class="fa-solid fa-server ic" style="color:#e57000"></i><div class="nm">MicroCloud</div><div class="lv" style="--w:85%"></div></div>
+      <div class="sk"><i class="fa-solid fa-network-wired ic" style="color:#e57000"></i><div class="nm">MicroOVN</div><div class="lv" style="--w:80%"></div></div>
+      <div class="sk"><i class="fa-solid fa-database ic" style="color:#e57000"></i><div class="nm">MicroCeph</div><div class="lv" style="--w:82%"></div></div>
+      <div class="sk"><i class="fa-solid fa-cubes ic" style="color:#e57000"></i><div class="nm">Proxmox</div><div class="lv" style="--w:88%"></div></div>
+      <div class="sk"><i class="fa-solid fa-cube ic" style="color:#183a6e"></i><div class="nm">VirtualBox</div><div class="lv" style="--w:90%"></div></div>
+    </div>
+  </div>
+
+  <div class="sgrp rv">
+    <h3><i class="fa-solid fa-terminal"></i> System Administration</h3>
+    <div class="sgrid">
+      <div class="sk"><i class="devicon-ubuntu-plain ic" style="color:#e95420"></i><div class="nm">Ubuntu</div><div class="lv" style="--w:95%"></div></div>
+      <div class="sk"><i class="devicon-redhat-original ic" style="color:#ee0000"></i><div class="nm">RedHat</div><div class="lv" style="--w:90%"></div></div>
+      <div class="sk"><i class="devicon-linux-plain ic" style="color:#fcc624"></i><div class="nm">Linux</div><div class="lv" style="--w:95%"></div></div>
+      <div class="sk"><i class="devicon-windows8-original ic" style="color:#00adef"></i><div class="nm">Windows Server</div><div class="lv" style="--w:88%"></div></div>
+      <div class="sk"><i class="devicon-apple-original ic" style="color:#fff"></i><div class="nm">macOS</div><div class="lv" style="--w:82%"></div></div>
+      <div class="sk"><i class="fa-solid fa-users-gear ic" style="color:#5fa04a"></i><div class="nm">Samba AD</div><div class="lv" style="--w:85%"></div></div>
+    </div>
+  </div>
+
+  <div class="sgrp rv">
+    <h3><i class="fa-solid fa-network-wired"></i> Networking & Security</h3>
+    <div class="sgrid">
+      <div class="sk"><i class="fa-solid fa-tower-broadcast ic" style="color:#2e2d7c"></i><div class="nm">MikroTik</div><div class="lv" style="--w:92%"></div></div>
+      <div class="sk"><i class="fa-solid fa-route ic" style="color:var(--primary)"></i><div class="nm">Routing / HA</div><div class="lv" style="--w:90%"></div></div>
+      <div class="sk"><i class="fa-solid fa-shield-virus ic" style="color:var(--danger)"></i><div class="nm">Firewall</div><div class="lv" style="--w:88%"></div></div>
+      <div class="sk"><i class="fa-solid fa-user-secret ic" style="color:var(--primary)"></i><div class="nm">Ethical Hacking</div><div class="lv" style="--w:75%"></div></div>
+      <div class="sk"><i class="fa-solid fa-lock ic" style="color:var(--warning)"></i><div class="nm">System Hardening</div><div class="lv" style="--w:90%"></div></div>
+    </div>
+  </div>
+
+  <div class="sgrp rv">
+    <h3><i class="fa-solid fa-code"></i> Programming & Fullstack</h3>
+    <div class="sgrid">
+      <div class="sk"><i class="devicon-python-plain ic" style="color:#3776ab"></i><div class="nm">Python</div><div class="lv" style="--w:88%"></div></div>
+      <div class="sk"><i class="devicon-java-plain ic" style="color:#f89820"></i><div class="nm">Java</div><div class="lv" style="--w:80%"></div></div>
+      <div class="sk"><i class="devicon-php-plain ic" style="color:#777bb3"></i><div class="nm">PHP</div><div class="lv" style="--w:82%"></div></div>
+      <div class="sk"><i class="devicon-react-original ic" style="color:#61dafb"></i><div class="nm">React.js</div><div class="lv" style="--w:78%"></div></div>
+      <div class="sk"><i class="devicon-javascript-plain ic" style="color:#f7df1e"></i><div class="nm">JavaScript</div><div class="lv" style="--w:82%"></div></div>
+      <div class="sk"><i class="devicon-bash-plain ic" style="color:#fff"></i><div class="nm">Bash</div><div class="lv" style="--w:90%"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="topology">
+  <h2 class="stitle rv">Network Topology</h2>
+  <p class="ssub rv">PT DIKA Infrastructure Architecture</p>
+  <div class="topology-container rv">
+    <div class="topology-title">
+      <h3><i class="fa-solid fa-network-wired"></i> PT DIKA Network Infrastructure</h3>
+      <p>Basic Internet Topology Design</p>
+    </div>
+    <div class="topology-svg" id="topologySvg">
+      <svg width="100%" height="100%" style="position:absolute;top:0;left:0">
+        <defs>
+          <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#00d9ff;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#0066ff;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <line x1="50%" y1="80" x2="25%" y2="200" stroke="url(#lineGrad)" stroke-width="2" opacity="0.5">
+          <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+        </line>
+        <line x1="50%" y1="80" x2="75%" y2="200" stroke="url(#lineGrad)" stroke-width="2" opacity="0.5">
+          <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+        </line>
+        <line x1="25%" y1="200" x2="15%" y2="350" stroke="url(#lineGrad)" stroke-width="2" opacity="0.5">
+          <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+        </line>
+        <line x1="25%" y1="200" x2="35%" y2="350" stroke="url(#lineGrad)" stroke-width="2" opacity="0.5">
+          <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+        </line>
+        <line x1="75%" y1="200" x2="65%" y2="350" stroke="url(#lineGrad)" stroke-width="2" opacity="0.5">
+          <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+        </line>
+        <line x1="75%" y1="200" x2="85%" y2="350" stroke="url(#lineGrad)" stroke-width="2" opacity="0.5">
+          <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+        </line>
+      </svg>
+      <div class="node" style="left:calc(50% - 30px);top:50px">
+        <div class="node-circle"><i class="fa-solid fa-globe"></i></div>
+        <div class="node-label">Internet</div>
+      </div>
+      <div class="node" style="left:calc(25% - 30px);top:170px">
+        <div class="node-circle" style="background:linear-gradient(135deg,var(--warning),var(--danger))"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="node-label">Firewall</div>
+      </div>
+      <div class="node" style="left:calc(75% - 30px);top:170px">
+        <div class="node-circle" style="background:linear-gradient(135deg,var(--accent),var(--secondary))"><i class="fa-solid fa-server"></i></div>
+        <div class="node-label">Core Router</div>
+      </div>
+      <div class="node" style="left:calc(15% - 30px);top:320px">
+        <div class="node-circle" style="background:linear-gradient(135deg,var(--success),#059669)"><i class="fa-solid fa-desktop"></i></div>
+        <div class="node-label">LAN Segment A</div>
+      </div>
+      <div class="node" style="left:calc(35% - 30px);top:320px">
+        <div class="node-circle" style="background:linear-gradient(135deg,var(--success),#059669)"><i class="fa-solid fa-desktop"></i></div>
+        <div class="node-label">LAN Segment B</div>
+      </div>
+      <div class="node" style="left:calc(65% - 30px);top:320px">
+        <div class="node-circle" style="background:linear-gradient(135deg,var(--primary),var(--secondary))"><i class="fa-solid fa-cloud"></i></div>
+        <div class="node-label">Cloud Servers</div>
+      </div>
+      <div class="node" style="left:calc(85% - 30px);top:320px">
+        <div class="node-circle" style="background:linear-gradient(135deg,var(--primary),var(--secondary))"><i class="fa-solid fa-database"></i></div>
+        <div class="node-label">Storage</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="ansible">
+  <h2 class="stitle rv">Infrastructure as Code</h2>
+  <p class="ssub rv">Ansible Automation - Managing 140+ Servers</p>
+  <div class="ansible-container rv">
+    <div class="ansible-header">
+      <h3><i class="fa-solid fa-robot"></i> Ansible Automation Engine</h3>
+      <p>One command to control 140+ servers simultaneously</p>
+    </div>
+    <div class="ansible-visual">
+      <div class="control-node">
+        <i class="fa-solid fa-terminal"></i>
+        <span>Control Node</span>
+      </div>
+      <div class="managed-nodes" id="managedNodes"></div>
+    </div>
+    <div class="ansible-command">
+      <div><span class="prompt">$ </span><span class="cmd">ansible all -m shell -a "yum update -y && systemctl restart nginx"</span></div>
+      <div style="margin-top:12px;color:var(--success)">✓ 140 servers updated successfully | 0 failed | 0 unreachable</div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="experience">
+  <h2 class="stitle rv">Experience</h2>
+  <p class="ssub rv">Professional Journey</p>
+  <div class="timeline">
+    <div class="tli rv">
+      <div class="thd">
+        <h4>Cloud & IT Infrastructure Engineer</h4>
+        <span class="wh">2022 — Present</span>
+      </div>
+      <div class="tco"><i class="fa-solid fa-building"></i> PT Danamas Insan Kreasi Andalan</div>
+      <ul class="tlist">
+        <li>Design, deploy, and manage IT infrastructure & private cloud environments using OpenStack on Ubuntu Server (Neutron, Router HA, Floating IP, NAT, dual-stack IPv4/IPv6).</li>
+        <li>Implement Infrastructure as Code (IaC) using Ansible — mass server configurations, OS updates/upgrades, and security hardening across RedHat/Ubuntu.</li>
+        <li>Engineer automated CI/CD deployment pipelines using GitHub Actions & Jenkins for seamless production releases.</li>
+        <li>Manage distributed storage (MicroCeph) and virtual networking (MicroOVN) within containerized workloads (Docker, MicroCloud).</li>
+        <li>Build & maintain Active Directory / Identity Management using Samba, Zentyal, and Univention Corporate Server (UCS).</li>
+        <li>Configure enterprise routing, firewall rules, and traffic management using MikroTik for high availability.</li>
+        <li>Lead IT Support team — from basic helpdesk to senior-level infrastructure escalation, cross-platform (Windows/Linux/macOS).</li>
+        <li>Manage dozens of biometric access control machines (Ginger Solution X170) and fingerprint attendance devices.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="projects">
+  <h2 class="stitle rv">Key Projects</h2>
+  <p class="ssub rv">Notable achievements and implementations</p>
+  <div class="projects">
+    <div class="proj rv">
+      <div class="pn">// PROJECT_001</div>
+      <h4><i class="fa-solid fa-shield-alt"></i> Mass Server Hardening</h4>
+      <p>Automation framework using Ansible for mass security hardening, patch management, and system upgrades across RedHat and Ubuntu servers — significantly reducing manual workload and improving security posture.</p>
+      <div class="stk"><span>Ansible</span><span>RedHat</span><span>Ubuntu</span><span>Bash</span><span>Security</span></div>
+    </div>
+    <div class="proj rv">
+      <div class="pn">// PROJECT_002</div>
+      <h4><i class="fa-solid fa-fingerprint"></i> IoT Fingerprint & Access Control</h4>
+      <p>Custom IoT Fingerprint system managing dozens of space access machines (Ginger Solution X170). Fullstack attendance management system pulling, processing, and displaying real-time biometric data centrally.</p>
+      <div class="stk"><span>Python</span><span>REST API</span><span>HTML</span><span>CSS</span><span>JavaScript</span><span>IoT</span></div>
+    </div>
+    <div class="proj rv">
+      <div class="pn">// PROJECT_003</div>
+      <h4><i class="fa-solid fa-cash-register"></i> "Kasirku" POS System</h4>
+      <p>Custom Point of Sale application for a retail grocery project (Toko Sembako) — built with modern stack for fast transactions, inventory, and reporting.</p>
+      <div class="stk"><span>Java</span><span>Quarkus</span><span>PHP</span><span>React.js</span><span>CSS</span><span>HTML</span></div>
+    </div>
+    <div class="proj rv">
+      <div class="pn">// PROJECT_004</div>
+      <h4><i class="fa-solid fa-server"></i> HA Multi-Node Private Cloud</h4>
+      <p>Highly available private cloud cluster with distributed storage and containerized workloads, Router HA, and production-ready deployment pipelines.</p>
+      <div class="stk"><span>OpenStack</span><span>MicroCloud</span><span>MicroCeph</span><span>MicroOVN</span><span>Docker</span><span>Ansible</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="education">
+  <h2 class="stitle rv">Education & Certifications</h2>
+  <p class="ssub rv">Academic background and professional credentials</p>
+  <div class="egrid">
+    <div class="ecard rv">
+      <h4><i class="fa-solid fa-graduation-cap"></i> Education</h4>
+      <div class="meta"><i class="fa-solid fa-calendar"></i> 2021 — 2024</div>
+      <p><strong>Universitas AMIKOM Yogyakarta</strong></p>
+      <p style="color:var(--text-dim);font-size:.95rem;margin-top:8px">S1 — Sistem Informasi (Bachelor of Information Systems)</p>
+    </div>
+    <div class="ecard rv">
+      <h4><i class="fa-solid fa-certificate"></i> Certifications</h4>
+      <ul class="clist">
+        <li>Workshop: Build Linux Application with Python (2022)<span class="iss">Python & Linux</span></li>
+        <li>Workshop: Build Web Application with PHP (2022)<span class="iss">PHP & Web Development</span></li>
+        <li>Workshop: Build Mobile App with Java Android (2022)<span class="iss">Android & Java</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="contact">
+  <h2 class="stitle rv">Get In Touch</h2>
+  <p class="ssub rv">Let's build something amazing together</p>
+  <div class="cgrid">
+    <a href="mailto:eki.rinaldo88@gmail.com" class="ccard rv">
+      <i class="fa-solid fa-envelope"></i>
+      <div class="lab">Email</div>
+      <div class="val">eki.rinaldo88@gmail.com</div>
+    </a>
+    <a href="https://linkedin.com/in/eki-rinaldo-506009305" target="_blank" class="ccard rv">
+      <i class="fa-brands fa-linkedin"></i>
+      <div class="lab">LinkedIn</div>
+      <div class="val">eki-rinaldo</div>
+    </a>
+    <a href="https://github.com/ekirinaldo" target="_blank" class="ccard rv">
+      <i class="fa-brands fa-github"></i>
+      <div class="lab">GitHub</div>
+      <div class="val">ekirinaldo</div>
+    </a>
+    <a href="https://wa.me/6287734078660" target="_blank" class="ccard rv">
+      <i class="fa-brands fa-whatsapp"></i>
+      <div class="lab">WhatsApp</div>
+      <div class="val">+62 877 3407 8660</div>
+    </a>
+    <div class="ccard rv">
+      <i class="fa-solid fa-location-dot"></i>
+      <div class="lab">Location</div>
+      <div class="val">Yogyakarta, Indonesia</div>
+    </div>
+    <a href="ekirinaldo cv .pdf" download class="ccard rv">
+      <i class="fa-solid fa-file-pdf"></i>
+      <div class="lab">Download</div>
+      <div class="val">Resume / CV</div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2024 Eki Rinaldo — DevOps Engineer Portfolio</p>
+  <p style="margin-top:8px">Built with <span class="heart">♥</span> using HTML, CSS & JavaScript</p>
+</footer>
+
+<script>
+// Particle network background
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let mouse = {x:0,y:0};
+
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+class Particle {
+  constructor(){
+    this.x = Math.random()*canvas.width;
+    this.y = Math.random()*canvas.height;
+    this.vx = (Math.random()-0.5)*0.5;
+    this.vy = (Math.random()-0.5)*0.5;
+    this.r = Math.random()*2+1;
+  }
+  update(){
+    this.x += this.vx;
+    this.y += this.vy;
+    if(this.x<0||this.x>canvas.width) this.vx*=-1;
+    if(this.y<0||this.y>canvas.height) this.vy*=-1;
+  }
+  draw(){
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(0,217,255,0.6)';
+    ctx.fill();
+  }
+}
+
+for(let i=0;i<80;i++) particles.push(new Particle());
+
+function connect(){
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x;
+      const dy=particles[i].y-particles[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<150){
+        ctx.beginPath();
+        ctx.strokeStyle=`rgba(0,217,255,${0.15*(1-dist/150)})`;
+        ctx.lineWidth=1;
+        ctx.moveTo(particles[i].x,particles[i].y);
+        ctx.lineTo(particles[j].x,particles[j].y);
+        ctx.stroke();
+      }
+    }
+    // Connect to mouse
+    const dx=particles[i].x-mouse.x;
+    const dy=particles[i].y-mouse.y;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist<200){
+      ctx.beginPath();
+      ctx.strokeStyle=`rgba(0,217,255,${0.3*(1-dist/200)})`;
+      ctx.lineWidth=1;
+      ctx.moveTo(particles[i].x,particles[i].y);
+      ctx.lineTo(mouse.x,mouse.y);
+      ctx.stroke();
+    }
+  }
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{p.update();p.draw()});
+  connect();
+  requestAnimationFrame(animate);
+}
+animate();
+
+// Cursor glow
+const cglow=document.getElementById('cglow');
+document.addEventListener('mousemove',e=>{
+  mouse.x=e.clientX;
+  mouse.y=e.clientY;
+  cglow.style.left=e.clientX+'px';
+  cglow.style.top=e.clientY+'px';
+});
+
+// Mobile menu
+const menuToggle=document.getElementById('menuToggle');
+const navLinks=document.getElementById('navLinks');
+menuToggle.addEventListener('click',()=>{
+  navLinks.classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  a.addEventListener('click',()=>navLinks.classList.remove('open'));
+});
+
+// Scroll reveal
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('in');
+  });
+},{threshold:0.1});
+document.querySelectorAll('.rv').forEach(el=>observer.observe(el));
+
+// Generate 140 managed nodes
+const managedNodes=document.getElementById('managedNodes');
+if(managedNodes){
+  for(let i=1;i<=140;i++){
+    const node=document.createElement('div');
+    node.className='managed-node';
+    node.textContent=String(i).padStart(3,'0');
+    node.style.animationDelay=(Math.random()*3)+'s';
+    managedNodes.appendChild(node);
+  }
+}
+
+// Skill click feedback
+document.querySelectorAll('.sk').forEach(sk=>{
+  sk.addEventListener('click',()=>{
+    sk.style.transform='scale(0.95)';
+    setTimeout(()=>sk.style.transform='',200);
+  });
+});
+
+// Active nav link on scroll
+const sections=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',()=>{
+  const scrollY=window.scrollY+100;
+  sections.forEach(sec=>{
+    const top=sec.offsetTop;
+    const h=sec.offsetHeight;
+    const id=sec.getAttribute('id');
+    const link=document.querySelector(`.nav-links a[href="#${id}"]`);
+    if(link){
+      if(scrollY>=top&&scrollY<top+h){
+        document.querySelectorAll('.nav-links a').forEach(a=>a.style.color='');
+        link.style.color='var(--primary)';
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>root@eki-rinaldo:~# ./portfolio.sh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+<style>
+:root{--bg:#000;--g:#00ff41;--g2:#00b82d;--gd:#0a3d12;--amb:#ffb000;--red:#ff2e2e;--cyan:#00ffff;--t:#c8ffd0;--td:#6fbf7a;--gl:0 0 10px rgba(0,255,65,.55),0 0 20px rgba(0,255,65,.25);--m:'JetBrains Mono','Share Tech Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t);font-family:var(--m);overflow-x:hidden;line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;background:repeating-linear-gradient(to bottom,transparent 0,transparent 2px,rgba(0,255,65,.06) 3px,transparent 4px);pointer-events:none;z-index:9998;mix-blend-mode:overlay;opacity:.55}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.75) 100%);pointer-events:none;z-index:9997}
+#matrix{position:fixed;inset:0;z-index:0;opacity:.35}
+.cglow{position:fixed;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(0,255,65,.12) 0%,transparent 70%);pointer-events:none;transform:translate(-50%,-50%);z-index:1}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 40px;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);border-bottom:1px solid var(--gd);display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-weight:800;color:var(--g);text-shadow:var(--gl);font-size:1.1rem}.nav-logo .p{color:var(--td)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:var(--td);text-decoration:none;font-size:.85rem;transition:color .25s}
+.menu-t{display:none;background:none;border:none;color:var(--g);font-size:1.4rem;cursor:pointer}
+.nav-links a::before{content:"> "}.nav-links a:hover{color:var(--g);text-shadow:var(--gl)}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;padding:120px 40px 60px}
+.terminal{width:100%;max-width:980px;background:rgba(4,15,4,.85);border:1px solid var(--g2);border-radius:10px;box-shadow:0 0 40px rgba(0,255,65,.25),inset 0 0 60px rgba(0,255,65,.05);overflow:hidden;animation:tIn 1s ease-out}
+@keyframes tIn{from{opacity:0;transform:translateY(30px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.tbar{background:linear-gradient(180deg,#0d2a0d,#061506);padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--gd)}
+.dot{width:12px;height:12px;border-radius:50%}.dr{background:#ff5f56}.dy{background:#ffbd2e}.dg{background:#27c93f}
+.ttitle{flex:1;text-align:center;color:var(--td);font-size:.8rem}
+.tbody{padding:30px 36px;font-size:1rem;min-height:420px}
+.tl{margin-bottom:10px;opacity:0;animation:lin .4s forwards}
+.tl .p{color:var(--g);text-shadow:var(--gl)}.tl .u{color:var(--cyan)}.tl .at{color:var(--td)}.tl .h{color:#ff7edb}.tl .c{color:var(--t)}
+.tl.out{color:var(--td);padding-left:8px}.tl.out strong{color:var(--g)}
+@keyframes lin{to{opacity:1}}
+.tl:nth-child(1){animation-delay:.2s}.tl:nth-child(2){animation-delay:.8s}.tl:nth-child(3){animation-delay:1.4s}.tl:nth-child(4){animation-delay:2s}.tl:nth-child(5){animation-delay:2.6s}.tl:nth-child(6){animation-delay:3.2s}.tl:nth-child(7){animation-delay:3.8s}.tl:nth-child(8){animation-delay:4.4s}.tl:nth-child(9){animation-delay:5s}
+.glitch{font-size:clamp(2rem,5vw,3.6rem);font-weight:800;color:var(--g);text-shadow:var(--gl);letter-spacing:2px;position:relative;display:inline-block;margin:18px 0 6px}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;overflow:hidden}
+.glitch::before{color:var(--red);animation:glA 3s infinite linear alternate-reverse;clip-path:polygon(0 0,100% 0,100% 45%,0 45%);transform:translate(-2px,-1px)}
+.glitch::after{color:var(--cyan);animation:glB 2.3s infinite linear alternate-reverse;clip-path:polygon(0 55%,100% 55%,100% 100%,0 100%);transform:translate(2px,1px)}
+@keyframes glA{0%,100%{transform:translate(0,0)}20%{transform:translate(-3px,1px)}40%{transform:translate(2px,-2px)}60%{transform:translate(-1px,2px)}80%{transform:translate(3px,0)}}
+@keyframes glB{0%,100%{transform:translate(0,0)}25%{transform:translate(2px,1px)}50%{transform:translate(-2px,-1px)}75%{transform:translate(1px,-2px)}}
+.sub{color:var(--td);font-size:1.05rem;margin-bottom:22px}
+.sub .typed{color:var(--g);text-shadow:var(--gl)}
+.sub .cursor{display:inline-block;width:10px;height:1.1em;background:var(--g);vertical-align:text-bottom;animation:blink 1s step-end infinite;box-shadow:var(--gl)}
+@keyframes blink{50%{opacity:0}}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 22px;background:transparent;border:1px solid var(--g2);color:var(--g);font-family:var(--m);font-size:.9rem;text-decoration:none;cursor:pointer;position:relative;overflow:hidden;transition:all .3s}
+.btn::before{content:"";position:absolute;inset:0;background:var(--g);transform:translateX(-100%);transition:transform .35s;z-index:-1}
+.btn:hover{color:#000;text-shadow:none;border-color:var(--g);box-shadow:var(--gl)}
+.btn:hover::before{transform:translateX(0)}.btn i{transition:transform .3s}.btn:hover i{transform:translateX(4px)}
+
+section.blk{position:relative;z-index:2;padding:100px 40px;max-width:1200px;margin:0 auto}
+.stitle{font-size:clamp(1.6rem,3vw,2.2rem);color:var(--g);text-shadow:var(--gl);margin-bottom:10px;display:flex;align-items:center;gap:14px}
+.stitle::before{content:"//";color:var(--td)}.stitle::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--g2),transparent)}
+.ssub{color:var(--td);margin-bottom:40px;font-size:.95rem}.ssub::before{content:"$ ";color:var(--g)}
+.rv{opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s}.rv.in{opacity:1;transform:translateY(0)}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.atxt p{margin-bottom:16px;color:var(--t)}.atxt .hl{color:var(--g);text-shadow:0 0 6px rgba(0,255,65,.4)}
+.scard{background:rgba(4,15,4,.7);border:1px solid var(--gd);padding:24px;border-radius:8px;position:relative;overflow:hidden}
+.scard::before{content:"";position:absolute;top:0;left:-100%;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--g),transparent);animation:scan 3s linear infinite}
+@keyframes scan{to{left:100%}}
+.scard h4{color:var(--g);margin-bottom:14px;font-size:.95rem}.scard h4 i{margin-right:8px}
+.srow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--gd);font-size:.85rem}
+.srow:last-child{border:none}.srow span:first-child{color:var(--td)}.srow span:last-child{color:var(--g)}
+.srow .bar{flex:1;margin:0 12px;height:6px;background:#071307;border-radius:3px;overflow:hidden;position:relative}
+.srow .bar::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#008f22,var(--g));width:var(--w,0%);box-shadow:var(--gl);animation:bf 1.8s ease-out forwards}
+@keyframes bf{from{width:0}}
+.sgrp{margin-bottom:50px}.sgrp h3{color:var(--g);margin-bottom:20px;font-size:1.1rem;display:flex;align-items:center;gap:10px}
+.sgrp h3 .num{color:var(--td);font-size:.85rem}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px}
+.sk{background:rgba(4,15,4,.6);border:1px solid var(--gd);border-radius:8px;padding:22px 14px;text-align:center;cursor:pointer;position:relative;overflow:hidden;transition:all .35s cubic-bezier(.2,.9,.3,1.2)}
+.sk::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(0,255,65,.15),transparent 60%);opacity:0;transition:opacity .35s}
+.sk:hover{transform:translateY(-6px) scale(1.03);border-color:var(--g);box-shadow:0 10px 30px rgba(0,255,65,.2),var(--gl)}
+.sk:hover::before{opacity:1}
+.sk .ic{font-size:2.8rem;display:block;margin-bottom:12px;filter:drop-shadow(0 0 6px rgba(0,255,65,.5));animation:fl 4s ease-in-out infinite}
+.sk:nth-child(2n) .ic{animation-delay:.5s}.sk:nth-child(3n) .ic{animation-delay:1s}.sk:nth-child(4n) .ic{animation-delay:1.5s}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.sk:hover .ic{animation:wig .9s ease-in-out}
+@keyframes wig{0%,100%{transform:rotate(0) scale(1)}20%{transform:rotate(-12deg) scale(1.15)}40%{transform:rotate(10deg) scale(1.2)}60%{transform:rotate(-8deg) scale(1.15)}80%{transform:rotate(6deg) scale(1.1)}}
+.sk .nm{font-size:.85rem;color:var(--t);font-weight:500}
+.sk .lv{margin-top:8px;height:3px;background:#071307;border-radius:2px;overflow:hidden}
+.sk .lv::after{content:"";display:block;height:100%;background:var(--g);box-shadow:var(--gl);width:var(--w,70%)}
+
+.sk .ic.linux{color:#fcc624}.sk .ic.docker{color:#2496ed}.sk .ic.python{color:#3776ab}.sk .ic.java{color:#f89820}.sk .ic.php{color:#777bb3}.sk .ic.react{color:#61dafb}.sk .ic.js{color:#f7df1e}.sk .ic.html5{color:#e34f26}.sk .ic.css3{color:#1572b6}.sk .ic.ansible{color:#ee0000}.sk .ic.jenkins{color:#d24939}.sk .ic.github{color:#fff}.sk .ic.redhat{color:#ee0000}.sk .ic.ubuntu{color:#e95420}.sk .ic.fedora{color:#294172}.sk .ic.windows8{color:#00adef}.sk .ic.apple{color:#fff}.sk .ic.selenium{color:#43b02a}.sk .ic.proxmox{color:#e57000}.sk .ic.virtualbox{color:#183a6e}.sk .ic.powershell{color:#5391fe}
+.timeline{position:relative;padding-left:30px}
+.timeline::before{content:"";position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--g),var(--gd),transparent)}
+.tli{position:relative;margin-bottom:40px;padding-left:20px}
+.tli::before{content:"";position:absolute;left:-27px;top:6px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--g);box-shadow:var(--gl);animation:pls 2s infinite}
+@keyframes pls{0%,100%{box-shadow:0 0 0 0 rgba(0,255,65,.6),var(--gl)}50%{box-shadow:0 0 0 10px rgba(0,255,65,0),var(--gl)}}
+.thd{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:8px}
+.thd h4{color:var(--g);font-size:1.05rem}
+.thd .wh{color:var(--td);font-size:.85rem;border:1px solid var(--gd);padding:2px 10px;border-radius:3px}
+.tco{color:var(--cyan);font-size:.9rem;margin-bottom:12px}
+.tlist{list-style:none}
+.tlist li{padding:6px 0 6px 22px;position:relative;color:var(--t);font-size:.9rem}
+.tlist li::before{content:">";position:absolute;left:0;top:6px;color:var(--g);text-shadow:var(--gl)}
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.proj{background:rgba(4,15,4,.6);border:1px solid var(--gd);border-radius:10px;padding:26px;position:relative;overflow:hidden;transition:all .35s}
+.proj::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g),var(--cyan),var(--g));background-size:200% 100%;animation:gsh 4s linear infinite}
+@keyframes gsh{to{background-position:-200% 0}}
+.proj:hover{transform:translateY(-5px);border-color:var(--g);box-shadow:0 15px 40px rgba(0,255,65,.15)}
+.proj .pn{color:var(--td);font-size:.8rem;margin-bottom:8px}.proj h4{color:var(--g);margin-bottom:12px;font-size:1.05rem}
+.proj p{color:var(--t);font-size:.88rem;margin-bottom:16px}
+.proj .stk{display:flex;flex-wrap:wrap;gap:6px}
+.proj .stk span{font-size:.72rem;padding:3px 9px;border:1px solid var(--gd);border-radius:3px;color:#00e639;background:rgba(0,255,65,.04)}
+.egrid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.ecard{background:rgba(4,15,4,.6);border:1px solid var(--gd);border-radius:8px;padding:22px}
+.ecard h4{color:var(--g);margin-bottom:8px;font-size:1rem}.ecard .meta{color:var(--td);font-size:.85rem;margin-bottom:10px}
+.clist{list-style:none}
+.clist li{padding:10px 0 10px 28px;border-bottom:1px dashed var(--gd);position:relative;font-size:.88rem}
+.clist li:last-child{border:none}
+.clist li::before{content:"\\f0a3";font-family:"Font Awesome 6 Free";font-weight:900;position:absolute;left:0;top:12px;color:var(--g);text-shadow:var(--gl)}
+.clist .iss{color:var(--td);font-size:.78rem;display:block;margin-top:2px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:30px}
+.ccard{background:rgba(4,15,4,.6);border:1px solid var(--gd);border-radius:8px;padding:24px;text-align:center;text-decoration:none;color:var(--t);transition:all .3s;position:relative;overflow:hidden}
+.ccard::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,rgba(0,255,65,.15),transparent 70%);opacity:0;transition:opacity .3s}
+.ccard:hover{transform:translateY(-4px);border-color:var(--g);box-shadow:var(--gl);color:var(--g)}
+.ccard:hover::after{opacity:1}
+.ccard i{font-size:2rem;color:var(--g);text-shadow:var(--gl);margin-bottom:12px;display:block;animation:fl 3s ease-in-out infinite}
+.ccard .lab{font-size:.78rem;color:var(--td);margin-bottom:4px}.ccard .val{font-size:.92rem;word-break:break-all}
+footer{text-align:center;padding:40px 20px;color:var(--td);font-size:.8rem;border-top:1px solid var(--gd);position:relative;z-index:2;background:rgba(0,0,0,.6)}
+footer .blink{color:var(--g);animation:blink 1s step-end infinite}
+@media (max-width:860px){
+  .nav{padding:12px 20px}
+  .nav-links{position:fixed;top:56px;right:-100%;flex-direction:column;background:rgba(0,0,0,.95);width:70%;height:calc(100vh - 56px);padding:30px 20px;transition:right .35s;border-left:1px solid var(--gd)}
+  .nav-links.open{right:0}.menu-t{display:block}
+  .agrid,.egrid{grid-template-columns:1fr}
+  section.blk{padding:70px 20px}.tbody{padding:22px}.hero{padding:100px 20px 40px}
+}
+</style>
+</head>
+<body>
+<canvas id="matrix"></canvas>
+<div class="cglow" id="cglow"></div>
+
+<nav class="nav">
+  <div class="nav-logo"><span class="p">root@</span>eki-rinaldo<span class="p">:~#</span></div>
+  <button class="menu-t" id="menuToggle"><i class="fa-solid fa-terminal"></i></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">./home</a></li>
+    <li><a href="#about">./about</a></li>
+    <li><a href="#skills">./skills</a></li>
+    <li><a href="#experience">./exp</a></li>
+    <li><a href="#projects">./projects</a></li>
+    <li><a href="#education">./edu</a></li>
+    <li><a href="#contact">./contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+  <div class="terminal">
+    <div class="tbar">
+      <span class="dot dr"></span><span class="dot dy"></span><span class="dot dg"></span>
+      <div class="ttitle">eki@kali:~/portfolio — bash — 120x40</div>
+    </div>
+    <div class="tbody">
+      <div class="tl"><span class="p">┌──(</span><span class="u">eki</span><span class="at">@</span><span class="h">kali</span><span class="p">)-[</span><span class="c">~/portfolio</span><span class="p">]</span></div>
+      <div class="tl"><span class="p">└─$ </span><span class="c">whoami</span></div>
+      <div class="tl out"><strong>EKI RINALDO</strong> — Cloud &amp; DevOps Engineer | IT Infrastructure Specialist</div>
+      <div class="tl"><span class="p">└─$ </span><span class="c">cat /etc/profile</span></div>
+      <div class="tl out">4+ years experience · OpenStack · Ansible · Docker · CI/CD · MikroTik · Python · Linux</div>
+      <div class="tl"><span class="p">└─$ </span><span class="c">./run_portfolio.sh</span></div>
+      <div class="tl out">[<span style="color:var(--g)">✓</span>] initializing systems...</div>
+      <div class="tl out">[<span style="color:var(--g)">✓</span>] loading skills matrix...</div>
+      <div class="glitch" data-text="EKI RINALDO">EKI RINALDO</div>
+      <div class="sub">&gt; <span class="typed" id="typed"></span><span class="cursor"></span></div>
+      <div class="cta">
+        <a href="#skills" class="btn"><i class="fa-solid fa-terminal"></i> view_skills</a>
+        <a href="#contact" class="btn"><i class="fa-solid fa-satellite-dish"></i> connect</a>
+        <a href="ekirinaldo cv .pdf" class="btn" download><i class="fa-solid fa-file-arrow-down"></i> download_cv</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="about">
+  <h2 class="stitle rv">ABOUT</h2>
+  <p class="ssub rv">cat /home/eki/about.md</p>
+  <div class="agrid">
+    <div class="atxt rv">
+      <p><span class="hl">&gt; Result-driven</span> Cloud &amp; DevOps Engineer and IT Infrastructure Specialist with <span class="hl">4 years</span> of comprehensive experience — encompassing <span class="hl">3 years</span> of IT Support Leadership (from basic helpdesk to senior escalation) and <span class="hl">1 year</span> of focused Cloud &amp; DevOps engineering.</p>
+      <p>Proven expertise in designing <span class="hl">private cloud environments</span> (OpenStack, MicroCloud), <span class="hl">Infrastructure as Code</span> (Ansible), and <span class="hl">CI/CD automation</span> (GitHub Actions, Jenkins).</p>
+      <p>Adept at bridging development and operations, managing complex network infrastructures (MikroTik), and developing custom full-stack business solutions (IoT, POS).</p>
+    </div>
+    <div class="scard rv">
+      <h4><i class="fa-solid fa-chart-line"></i> SYSTEM METRICS</h4>
+      <div class="srow"><span>Years of Experience</span><div class="bar" style="--w:80%"></div><span>4+</span></div>
+      <div class="srow"><span>Cloud &amp; DevOps</span><div class="bar" style="--w:90%"></div><span>90%</span></div>
+      <div class="srow"><span>Linux / SysAdmin</span><div class="bar" style="--w:95%"></div><span>95%</span></div>
+      <div class="srow"><span>Networking (MikroTik)</span><div class="bar" style="--w:88%"></div><span>88%</span></div>
+      <div class="srow"><span>Automation (Ansible)</span><div class="bar" style="--w:92%"></div><span>92%</span></div>
+      <div class="srow"><span>Fullstack Dev</span><div class="bar" style="--w:80%"></div><span>80%</span></div>
+      <div class="srow"><span>Security / Hardening</span><div class="bar" style="--w:85%"></div><span>85%</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="skills">
+  <h2 class="stitle rv">SKILLS &amp; TOOLS</h2>
+  <p class="ssub rv">ls -la /usr/bin/skills/</p>
+
+  <div class="sgrp rv">
+    <h3><span class="num">[01]</span> <i class="fa-solid fa-robot"></i> DevOps &amp; Automation</h3>
+    <div class="sgrid">
+      <div class="sk"><i class="devicon-ansible-plain ic ansible"></i><div class="nm">Ansible</div><div class="lv" style="--w:95%"></div></div>
+      <div class="sk"><i class="devicon-github-original ic github"></i><div class="nm">GitHub Actions</div><div class="lv" style="--w:90%"></div></div>
+      <div class="sk"><i class="devicon-jenkins-plain ic jenkins"></i><div class="nm">Jenkins</div><div class="lv" style="--w:85%"></div></div>
+      <div class="sk"><i class="devicon-docker-plain ic docker"></i><div class="nm">Docker</div><div class="lv" style="--w:90%"></div></div>
+      <div class="sk"><i class="fa-solid fa-shield-halved ic" style="color:var(--g)"></i><div class="nm">Mass Hardening</div><div class="lv" style="--w:92%"></div></div>
+    </div>
+  </div>
+
+  <div class="sgrp rv">
+    <h3><span class="num">[02]</span> <i class="fa-solid fa-cloud"></i> Cloud &amp; Virtualization</h3>
+    <div class="sgrid">
+      <div class="sk"><i class="fa-solid fa-cloud-bolt ic" style="color:#ee3f3f"></i><div class="nm">OpenStack</div><div class="lv" style="--w:92%"></div></div>
+      <div class="sk"><i class="fa-solid fa-server ic" style="color:#e57000"></i><div class="nm">MicroCloud</div><div class="lv" style="--w:85%"></div></div>
+      <div class="sk"><i class="fa-solid fa-network-wired ic" style="color:#e57000"></i><div class="nm">MicroOVN</div><div class="lv" style="--w:80%"></div></div>
+      <div class="sk"><i class="fa-solid fa-database ic" style="color:#e57000"></i><div class="nm">MicroCeph</div><div class="lv" style="--w:82%"></div></div>
+      <div class="sk"><i class="fa-solid fa-cubes ic" style="color:#e57000"></i><div class="nm">Proxmox</div><div class="lv" style="--w:88%"></div></div>
+      <div class="sk"><i class="fa-solid fa-cube ic" style="color:#183a6e"></i><div class="nm">VirtualBox</div><div class="lv" style="--w:90%"></div></div>
+      <div class="sk"><i class="fa-solid fa-cubes-stacked ic" style="color:#2496ed"></i><div class="nm">DevStack</div><div class="lv" style="--w:78%"></div></div>
+    </div>
+  </div>
+
+  <div class="sgrp rv">
+    <h3><span class="num">[03]</span> <i class="fa-solid fa-terminal"></i> System &amp; Directory Admin</h3>
+    <div class="sgrid">
+      <div class="sk"><i class="devicon-ubuntu-plain ic ubuntu"></i><div class="nm">Ubuntu</div><div class="lv" style="--w:95%"></div></div>
+      <div class="sk"><i class="devicon-redhat-original ic redhat"></i><div class="nm">RedHat</div><div class="lv" style="--w:90%"></div></div>
+      <div class="sk"><i class="devicon-fedora-plain ic fedora"></i><div class="nm">Fedora</div><div class="lv" style="--w:85%"></div></div>
+      <div class="sk"><i class="devicon-linux-plain ic linux"></i><div class="nm">Linux</div><div class="lv" style="--w:95%"></div></div>
+      <div class="sk"><i class="devicon-windows8-original ic windows8"></i><div class="nm">Windows Server</div><div class="lv" style="--w:88%"></div></div>
+      <div class="sk"><i class="devicon-apple-original ic apple"></i><div class="nm">macOS</div><div class="lv" style="--w:82%"></div></div>
+      <div class="sk"><i class="fa-solid fa-users-gear ic" style="color:#5fa04a"></i><div class="nm">Samba AD</div><div class="lv" style="--w:85%"></div></div>
+      <div class="sk"><i class="fa-solid fa-sitemap ic" style="color:#5fa04a"></i><div class="nm">Zentyal</div><div class="lv" style="--w:80%"></div></div>
+      <div class="sk"><i class="fa-solid fa-id-badge ic" style="color:#5fa04a"></i><div class="nm">UCS</div><div class="lv" style="--w:82%"></div></div>
+    </div>
+  </div>
+
+  <div class="sgrp rv">
+    <h3><span class="num">[04]</span> <i class="fa-solid fa-network-wired"></i> Networking &amp; Security</h3>
+    <div class="sgrid">
+      <div class="sk"><i class="fa-solid fa-tower-broadcast ic" style="color:#2e2d7c"></i><div class="nm">MikroTik</div><div class="lv" style="--w:92%"></div></div>
+      <div class="sk"><i class="fa-solid fa-route ic" style="color:var(--g)"></i><div class="nm">Routing / HA</div><div class="lv" style="--w:90%"></div></div>
+      <div class="sk"><i class="fa-solid fa-shield-virus ic" style="color:var(--red)"></i><div class="nm">Firewall</div><div class="lv" style="--w:88%"></div></div>
+      <div class="sk"><i class="fa-solid fa-user-secret ic" style="color:var(--g)"></i><div class="nm">Ethical Hacking</div><div class="lv" style="--w:75%"></div></div>
+      <div class="sk"><i class="fa-solid fa-lock ic" style="color:var(--amb)"></i><div class="nm">System Hardening</div><div class="lv" style="--w:90%"></div></div>
+      <div class="sk"><i class="fa-solid fa-globe ic" style="color:var(--cyan)"></i><div class="nm">DNS / DHCP</div><div class="lv" style="--w:88%"></div></div>
+    </div>
+  </div>
+
+  <div class="sgrp rv">
+    <h3><span class="num">[05]</span> <i class="fa-solid fa-code"></i> Programming &amp; Fullstack</h3>
+    <div class="sgrid">
+      <div class="sk"><i class="devicon-python-plain ic python"></i><div class="nm">Python</div><div class="lv" style="--w:88%"></div></div>
+      <div class="sk"><i class="devicon-java-plain ic java"></i><div class="nm">Java (Quarkus)</div><div class="lv" style="--w:80%"></div></div>
+      <div class="sk"><i class="devicon-php-plain ic php"></i><div class="nm">PHP</div><div class="lv" style="--w:82%"></div></div>
+      <div class="sk"><i class="devicon-react-original ic react"></i><div class="nm">React.js</div><div class="lv" style="--w:78%"></div></div>
+      <div class="sk"><i class="devicon-javascript-plain ic js"></i><div class="nm">JavaScript</div><div class="lv" style="--w:82%"></div></div>
+      <div class="sk"><i class="devicon-html5-plain ic html5"></i><div class="nm">HTML5</div><div class="lv" style="--w:92%"></div></div>
+      <div class="sk"><i class="devicon-css3-plain ic css3"></i><div class="nm">CSS3</div><div class="lv" style="--w:90%"></div></div>
+      <div class="sk"><i class="devicon-bash-plain ic" style="color:#fff"></i><div class="nm">Bash</div><div class="lv" style="--w:90%"></div></div>
+      <div class="sk"><i class="devicon-powershell-plain ic powershell"></i><div class="nm">PowerShell</div><div class="lv" style="--w:75%"></div></div>
+      <div class="sk"><i class="devicon-selenium-original ic selenium"></i><div class="nm">Selenium (SQA)</div><div class="lv" style="--w:78%"></div></div>
+    </div>
+  </div>
+
+  <div class="sgrp rv">
+    <h3><span class="num">[06]</span> <i class="fa-solid fa-microchip"></i> IT Support &amp; IoT</h3>
+    <div class="sgrid">
+      <div class="sk"><i class="fa-solid fa-fingerprint ic" style="color:var(--g)"></i><div class="nm">Biometric IoT</div><div class="lv" style="--w:90%"></div></div>
+      <div class="sk"><i class="fa-solid fa-id-card ic" style="color:var(--g)"></i><div class="nm">Access Control X170</div><div class="lv" style="--w:92%"></div></div>
+      <div class="sk"><i class="fa-solid fa-headset ic" style="color:var(--cyan)"></i><div class="nm">IT Support Lead</div><div class="lv" style="--w:95%"></div></div>
+      <div class="sk"><i class="fa-solid fa-screwdriver-wrench ic" style="color:var(--amb)"></i><div class="nm">Troubleshooting</div><div class="lv" style="--w:95%"></div></div>
+      <div class="sk"><i class="fa-solid fa-desktop ic" style="color:var(--cyan)"></i><div class="nm">Remote Support</div><div class="lv" style="--w:92%"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="experience">
+  <h2 class="stitle rv">EXPERIENCE</h2>
+  <p class="ssub rv">cat /var/log/career.log</p>
+  <div class="timeline">
+    <div class="tli rv">
+      <div class="thd">
+        <h4>Support &amp; IT Infrastructure Engineer</h4>
+        <span class="wh">2022 — Present</span>
+      </div>
+      <div class="tco"><i class="fa-solid fa-building"></i> PT Danamas Insan Kreasi Andalan</div>
+      <ul class="tlist">
+        <li>Design, deploy, and manage IT infrastructure &amp; private cloud environments using OpenStack on Ubuntu Server (Neutron, Router HA, Floating IP, NAT, dual-stack IPv4/IPv6).</li>
+        <li>Implement Infrastructure as Code (IaC) using Ansible — mass server configurations, OS updates/upgrades, and security hardening across RedHat/Ubuntu.</li>
+        <li>Engineer automated CI/CD deployment pipelines using GitHub Actions &amp; Jenkins for seamless production releases.</li>
+        <li>Manage distributed storage (MicroCeph) and virtual networking (MicroOVN) within containerized workloads (Docker, MicroCloud).</li>
+        <li>Build &amp; maintain Active Directory / Identity Management using Samba, Zentyal, and Univention Corporate Server (UCS).</li>
+        <li>Configure enterprise routing, firewall rules, and traffic management using MikroTik for high availability.</li>
+        <li>Lead IT Support team — from basic helpdesk to senior-level infrastructure escalation, cross-platform (Windows/Linux/macOS).</li>
+        <li>Manage dozens of biometric access control machines (Ginger Solution X170) and fingerprint attendance devices.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="projects">
+  <h2 class="stitle rv">PROJECTS</h2>
+  <p class="ssub rv">ls ~/projects/ --tree</p>
+  <div class="projects">
+    <div class="proj rv">
+      <div class="pn">// PROJECT_001</div>
+      <h4><i class="fa-solid fa-shield-alt"></i> Mass Server Hardening</h4>
+      <p>Automation framework using Ansible for mass security hardening, patch management, and system upgrades across RedHat and Ubuntu servers — significantly reducing manual workload and improving security posture.</p>
+      <div class="stk"><span>Ansible</span><span>RedHat</span><span>Ubuntu</span><span>Bash</span><span>Security</span></div>
+    </div>
+    <div class="proj rv">
+      <div class="pn">// PROJECT_002</div>
+      <h4><i class="fa-solid fa-fingerprint"></i> IoT Fingerprint &amp; Access Control</h4>
+      <p>Custom IoT Fingerprint system managing dozens of space access machines (Ginger Solution X170). Fullstack attendance management system pulling, processing, and displaying real-time biometric data centrally.</p>
+      <div class="stk"><span>Python</span><span>REST API</span><span>HTML</span><span>CSS</span><span>JavaScript</span><span>IoT</span></div>
+    </div>
+    <div class="proj rv">
+      <div class="pn">// PROJECT_003</div>
+      <h4><i class="fa-solid fa-cash-register"></i> "Kasirku" POS System</h4>
+      <p>Custom Point of Sale application for a retail grocery project (Toko Sembako) — built with modern stack for fast transactions, inventory, and reporting.</p>
+      <div class="stk"><span>Java</span><span>Quarkus</span><span>PHP</span><span>React.js</span><span>CSS</span><span>HTML</span></div>
+    </div>
+    <div class="proj rv">
+      <div class="pn">// PROJECT_004</div>
+      <h4><i class="fa-solid fa-server"></i> HA Multi-Node Private Cloud</h4>
+      <p>Highly available private cloud cluster with distributed storage and containerized workloads, Router HA, and production-ready deployment pipelines.</p>
+      <div class="stk"><span>OpenStack</span><span>MicroCloud</span><span>MicroCeph</span><span>MicroOVN</span><span>Docker</span><span>Ansible</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="education">
+  <h2 class="stitle rv">EDUCATION &amp; CERTS</h2>
+  <p class="ssub rv">cat /var/log/education.log</p>
+  <div class="egrid">
+    <div class="ecard rv">
+      <h4><i class="fa-solid fa-graduation-cap"></i> FORMAL EDUCATION</h4>
+      <div class="meta">Universitas Mohammad Husni Thamrin</div>
+      <p>Bachelor of Computer Science (S-1) — Teknik Informatika</p>
+      <div class="meta" style="margin-top:8px">Graduated: August 22, 2022</div>
+    </div>
+    <div class="ecard rv">
+      <h4><i class="fa-solid fa-certificate"></i> CERTIFICATIONS</h4>
+      <ul class="clist">
+        <li>Red Hat System Administration I (RH124-RHA) Ver.10 <span class="iss">Red Hat Academy · Oct 2026 · 40 CH</span></li>
+        <li>SQA Automation Engineer <span class="iss">Juara Coding</span></li>
+        <li>Building a Homelab with MicroCloud <span class="iss">BrightTALK · Aug 2025</span></li>
+        <li>Ethical Hacking 101: Beginner's Guide <span class="iss">Simplilearn SkillUP</span></li>
+        <li>MikroTik Mini Class <span class="iss">IDN Networkers Webinar</span></li>
+        <li>Webinar OCR di atas Ubuntu <span class="iss">ITTS · Sep 2025</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="contact">
+  <h2 class="stitle rv">CONTACT</h2>
+  <p class="ssub rv">ssh eki@contact --port 443</p>
+  <div class="cgrid">
+    <a class="ccard rv" href="mailto:ekirinaldo86@gmail.com">
+      <i class="fa-solid fa-envelope"></i>
+      <div class="lab">// EMAIL</div>
+      <div class="val">ekirinaldo86@gmail.com</div>
+    </a>
+    <a class="ccard rv" href="https://wa.me/6281380833898" target="_blank">
+      <i class="fa-brands fa-whatsapp"></i>
+      <div class="lab">// WHATSAPP</div>
+      <div class="val">+62 813-8083-3898</div>
+    </a>
+    <a class="ccard rv" href="https://www.credly.com/users/eki-rinaldo" target="_blank">
+      <i class="fa-solid fa-award"></i>
+      <div class="lab">// CREDLY</div>
+      <div class="val">Red Hat Certified</div>
+    </a>
+    <div class="ccard rv">
+      <i class="fa-solid fa-location-dot"></i>
+      <div class="lab">// LOCATION</div>
+      <div class="val">Jakarta Timur, Indonesia</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>&copy; 2026 EKI RINALDO · Crafted with <span style="color:var(--g)">♥</span> and lots of <span style="color:var(--g)">caffeine</span></div>
+  <div style="margin-top:6px">[ system status: <span style="color:var(--g)">ONLINE</span> ] <span class="blink">_</span></div>
+</footer>
+
+<script>
+// Matrix Rain
+(function(){
+  const c=document.getElementById('matrix');
+  const ctx=c.getContext('2d');
+  let w,h,cols,drops;
+  const chars='アイカケサタナハマヤラワ0123456789ABCDEF{}[]<>/*$#@!%&'.split('');
+  function resize(){
+    w=c.width=window.innerWidth;
+    h=c.height=window.innerHeight;
+    const fs=16;
+    cols=Math.floor(w/fs);
+    drops=Array(cols).fill(0).map(()=>Math.random()*h/fs);
+  }
+  resize();
+  window.addEventListener('resize',resize);
+  function draw(){
+    ctx.fillStyle='rgba(0,0,0,0.06)';
+    ctx.fillRect(0,0,w,h);
+    ctx.font='15px "Share Tech Mono",monospace';
+    for(let i=0;i<cols;i++){
+      const ch=chars[Math.floor(Math.random()*chars.length)];
+      const x=i*16;
+      const y=drops[i]*16;
+      ctx.fillStyle='#c8ffd0';
+      ctx.fillText(ch,x,y);
+      ctx.fillStyle='rgba(0,255,65,0.75)';
+      ctx.fillText(ch,x,y-16);
+      if(y>h && Math.random()>.975) drops[i]=0;
+      drops[i]++;
+    }
+  }
+  setInterval(draw,55);
+})();
+
+// Cursor Glow
+(function(){
+  const g=document.getElementById('cglow');
+  document.addEventListener('mousemove',e=>{
+    g.style.left=e.clientX+'px';
+    g.style.top=e.clientY+'px';
+  });
+})();
+
+// Typed Effect
+(function(){
+  const el=document.getElementById('typed');
+  const phrases=[
+    'Cloud & DevOps Engineer',
+    'IT Infrastructure Specialist',
+    'OpenStack · Ansible · Docker · CI/CD',
+    'Linux SysAdmin · MikroTik Expert',
+    'Fullstack Developer · IoT Builder',
+    'root@kali:~# ready_to_deploy_'
+  ];
+  let pi=0,ci=0,deleting=false;
+  function tick(){
+    const cur=phrases[pi];
+    if(!deleting){
+      el.textContent=cur.slice(0,++ci);
+      if(ci===cur.length){deleting=true;setTimeout(tick,1800);return}
+    }else{
+      el.textContent=cur.slice(0,--ci);
+      if(ci===0){deleting=false;pi=(pi+1)%phrases.length}
+    }
+    setTimeout(tick,deleting?35:70);
+  }
+  setTimeout(tick,1200);
+})();
+
+// Scroll Reveal
+(function(){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.12});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+})();
+
+// Mobile Menu
+(function(){
+  const t=document.getElementById('menuToggle');
+  const n=document.getElementById('navLinks');
+  t.addEventListener('click',()=>n.classList.toggle('open'));
+  n.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>n.classList.remove('open')));
+})();
+
+// Skill Click Feedback
+document.querySelectorAll('.sk').forEach(s=>{
+  s.addEventListener('click',()=>{
+    const name=s.querySelector('.nm').textContent;
+    const pop=document.createElement('div');
+    pop.textContent=`$ executing ${name}... [OK]`;
+    pop.style.cssText=`
+      position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+      background:rgba(0,20,0,.95);border:1px solid #00ff41;
+      color:#00ff41;padding:10px 20px;border-radius:6px;
+      font-family:var(--m);font-size:.85rem;z-index:10000;
+      box-shadow:0 0 20px rgba(0,255,65,.4);
+      animation:popIn .3s ease-out;
+    `;
+    document.body.appendChild(pop);
+    setTimeout(()=>{pop.style.opacity='0';pop.style.transition='opacity .4s'},1500);
+    setTimeout(()=>pop.remove(),2000);
+  });
+});
+</script>
+</body>
+</html>
+
