@@ -286,29 +286,6 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
 .decoration-2{width:420px;height:420px;top:50%;left:50%;transform:translate(-50%,-50%);border-style:dashed;animation:rotate 30s linear infinite reverse}
 @keyframes rotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
 @media (max-width:768px){.profile-photo-frame{width:250px;height:250px}.decoration-1{width:300px;height:300px}.decoration-2{width:340px;height:340px}}
-
-/* CI/CD PIPELINE VISUAL */
-.cicd-pipeline{margin-top:30px;display:flex;flex-direction:column;align-items:center;gap:16px}
-.pipeline-title{font-size:.85rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;font-weight:600}
-.pipeline-flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center}
-.pipeline-step{background:var(--bg3);border:1px solid rgba(0,217,255,.2);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;transition:all .3s;position:relative;min-width:120px}
-.pipeline-step:hover{border-color:var(--primary);transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,217,255,.2)}
-.pipeline-step i{font-size:1.3rem;color:var(--primary)}
-.pipeline-step .step-label{font-size:.75rem;font-weight:600;color:var(--text)}
-.pipeline-arrow{color:var(--success);font-size:1rem;animation:arrowPulse 1.5s infinite}
-@keyframes arrowPulse{0%,100%{opacity:.4;transform:translateX(0)}50%{opacity:1;transform:translateX(3px)}}
-.pipeline-status{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:8px}
-.status-item{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--text-dim)}
-.status-dot{width:8px;height:8px;border-radius:50%;animation:statusBlink 2s infinite}
-.status-dot.green{background:var(--success)}
-.status-dot.blue{background:var(--primary)}
-.status-dot.yellow{background:#fbbf24}
-@keyframes statusBlink{0%,100%{opacity:1}50%{opacity:.4}}
-.pipeline-terminal{background:var(--bg3);border:1px solid rgba(0,217,255,.15);border-radius:10px;padding:12px 16px;font-family:var(--mono);font-size:.75rem;color:var(--text-dim);width:100%;max-width:500px;margin-top:8px}
-.pipeline-terminal .pt-line{margin-bottom:4px}
-.pipeline-terminal .pt-prompt{color:var(--primary)}
-.pipeline-terminal .pt-cmd{color:var(--success)}
-.pipeline-terminal .pt-output{color:var(--text-dim)}
 </style>
 </head>
 
@@ -359,51 +336,6 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
         </div>
         <div class="photo-decoration decoration-1"></div>
         <div class="photo-decoration decoration-2"></div>
-      </div>
-
-      <!-- CI/CD Pipeline Visual -->
-      <div class="cicd-pipeline">
-        <div class="pipeline-title">CI/CD Pipeline Automation</div>
-        <div class="pipeline-flow">
-          <div class="pipeline-step">
-            <i class="fa-brands fa-git-alt"></i>
-            <span class="step-label">Git Push</span>
-          </div>
-          <i class="fa-solid fa-chevron-right pipeline-arrow"></i>
-          <div class="pipeline-step">
-            <i class="fa-brands fa-github"></i>
-            <span class="step-label">GitHub Actions</span>
-          </div>
-          <i class="fa-solid fa-chevron-right pipeline-arrow"></i>
-          <div class="pipeline-step">
-            <i class="fa-brands fa-docker"></i>
-            <span class="step-label">Docker Build</span>
-          </div>
-          <i class="fa-solid fa-chevron-right pipeline-arrow"></i>
-          <div class="pipeline-step">
-            <i class="fa-solid fa-vial"></i>
-            <span class="step-label">Test</span>
-          </div>
-          <i class="fa-solid fa-chevron-right pipeline-arrow"></i>
-          <div class="pipeline-step">
-            <i class="fa-solid fa-rocket"></i>
-            <span class="step-label">Deploy</span>
-          </div>
-        </div>
-        <div class="pipeline-status">
-          <div class="status-item"><div class="status-dot green"></div>Build: Passed</div>
-          <div class="status-item"><div class="status-dot green"></div>Tests: 47/47</div>
-          <div class="status-item"><div class="status-dot blue"></div>Deploy: Production</div>
-          <div class="status-item"><div class="status-dot yellow"></div>Uptime: 99.9%</div>
-        </div>
-        <div class="pipeline-terminal">
-          <div class="pt-line"><span class="pt-prompt">$ </span><span class="pt-cmd">git push origin main</span></div>
-          <div class="pt-line"><span class="pt-output">→ Triggering GitHub Actions workflow...</span></div>
-          <div class="pt-line"><span class="pt-output">→ Building Docker image: eki/app:latest</span></div>
-          <div class="pt-line"><span class="pt-output">→ Running 47 tests... all passed ✓</span></div>
-          <div class="pt-line"><span class="pt-output">→ Deploying to production server...</span></div>
-          <div class="pt-line"><span class="pt-output" style="color:var(--success)">✓ Deployment successful! Live at https://app.example.com</span></div>
-        </div>
       </div>
     </div>
   </div>
