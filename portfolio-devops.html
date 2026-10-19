@@ -274,6 +274,21 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
 .doc-btn-primary:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,217,255,.4)}
 .doc-btn-secondary{background:var(--bg2);color:var(--text);border:1px solid rgba(0,217,255,.3)}
 .doc-btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+
+/* PROFILE PHOTO */
+.profile-photo-container{position:relative;display:flex;justify-content:center;align-items:center;padding:40px}
+.profile-photo-frame{position:relative;width:320px;height:320px;border-radius:50%;overflow:hidden;border:4px solid transparent;background:linear-gradient(135deg,var(--primary),var(--secondary)) padding-box,linear-gradient(135deg,var(--primary),var(--secondary)) border-box;box-shadow:0 20px 60px rgba(0,217,255,.3),0 0 100px rgba(0,217,255,.1);animation:photoFloat 4s ease-in-out infinite}
+@keyframes photoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.profile-photo{width:100%;height:100%;object-fit:cover;object-position:center top}
+.photo-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,217,255,.1),rgba(16,185,129,.1));pointer-events:none}
+.photo-badge{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--success),var(--primary));color:#fff;padding:10px 24px;border-radius:25px;font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 5px 20px rgba(16,185,129,.4);animation:badgePulse 2s infinite;white-space:nowrap}
+@keyframes badgePulse{0%,100%{box-shadow:0 5px 20px rgba(16,185,129,.4)}50%{box-shadow:0 5px 30px rgba(16,185,129,.6)}}
+.photo-badge i{font-size:1rem}
+.photo-decoration{position:absolute;border-radius:50%;border:2px solid rgba(0,217,255,.3)}
+.decoration-1{width:380px;height:380px;top:50%;left:50%;transform:translate(-50%,-50%);animation:rotate 20s linear infinite}
+.decoration-2{width:420px;height:420px;top:50%;left:50%;transform:translate(-50%,-50%);border-style:dashed;animation:rotate 30s linear infinite reverse}
+@keyframes rotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+@media (max-width:768px){.profile-photo-frame{width:250px;height:250px}.decoration-1{width:300px;height:300px}.decoration-2{width:340px;height:340px}}
 </style>
 </head>
 
@@ -317,22 +332,17 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
       </div>
     </div>
     <div class="hero-visual">
-      <div class="terminal-window">
-        <div class="terminal-header">
-          <span class="terminal-dot red"></span>
-          <span class="terminal-dot yellow"></span>
-          <span class="terminal-dot green"></span>
-          <div class="terminal-title">eki@devops:~</div>
+      <div class="profile-photo-container">
+        <div class="profile-photo-frame">
+          <img src="images/eki.jpeg" alt="Eki Rinaldo - DevOps Engineer" class="profile-photo">
+          <div class="photo-overlay"></div>
         </div>
-        <div class="terminal-body">
-          <div class="terminal-line"><span class="prompt">$ </span><span class="cmd">ansible-playbook deploy.yml</span></div>
-          <div class="terminal-line"><span class="output">PLAY [Deploy to production]</span></div>
-          <div class="terminal-line"><span class="output">TASK [Gathering Facts]</span></div>
-          <div class="terminal-line"><span class="output">TASK [Deploy application]</span></div>
-          <div class="terminal-line"><span class="output">changed: [server-01]</span></div>
-          <div class="terminal-line"><span class="output">changed: [server-02]</span></div>
-          <div class="terminal-line"><span class="output">PLAY RECAP: ok=140 failed=0</span></div>
+        <div class="photo-badge">
+          <i class="fa-solid fa-check-circle"></i>
+          <span>Available for Hire</span>
         </div>
+        <div class="photo-decoration decoration-1"></div>
+        <div class="photo-decoration decoration-2"></div>
       </div>
     </div>
   </div>
