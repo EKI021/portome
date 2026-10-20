@@ -1234,12 +1234,12 @@ filterBtns.forEach(btn => {
 
 // Document open and download functions
 function openDoc(filename) {
-  const docPath = 'docs/' + filename;
+  const docPath = 'https://eki021.github.io/portome/docs/' + filename;
   window.open(docPath, '_blank');
 }
 
 function downloadDoc(filename) {
-  const docPath = 'docs/' + filename;
+  const docPath = 'https://eki021.github.io/portome/docs/' + filename;
   const link = document.createElement('a');
   link.href = docPath;
   link.download = filename;
