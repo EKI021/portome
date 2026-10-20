@@ -269,11 +269,9 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
 .doc-meta-item{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--text-dim)}
 .doc-meta-item i{color:var(--primary);font-size:.9rem}
 .doc-actions{display:flex;gap:12px}
-.doc-btn{flex:1;padding:12px;border-radius:10px;border:none;font-weight:600;font-size:.85rem;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--sans)}
+.doc-btn{padding:12px;border-radius:10px;border:none;font-weight:600;font-size:.85rem;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--sans);width:100%}
 .doc-btn-primary{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff}
 .doc-btn-primary:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,217,255,.4)}
-.doc-btn-secondary{background:var(--bg2);color:var(--text);border:1px solid rgba(0,217,255,.3)}
-.doc-btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
 
 /* PROFILE PHOTO */
 .profile-photo-container{position:relative;display:flex;justify-content:center;align-items:center;padding:40px}
@@ -939,7 +937,6 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
         </div>
         <div class="doc-actions">
           <button class="doc-btn doc-btn-primary" onclick="openDoc('devops.pdf')"><i class="fa-solid fa-eye"></i> View</button>
-          <button class="doc-btn doc-btn-secondary" onclick="downloadDoc('devops.pdf')"><i class="fa-solid fa-download"></i> Download</button>
         </div>
       </div>
 
@@ -954,7 +951,6 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
         </div>
         <div class="doc-actions">
           <button class="doc-btn doc-btn-primary" onclick="openDoc('ekirialdo-redhat-academy.pdf')"><i class="fa-solid fa-eye"></i> View</button>
-          <button class="doc-btn doc-btn-secondary" onclick="downloadDoc('ekirialdo-redhat-academy.pdf')"><i class="fa-solid fa-download"></i> Download</button>
         </div>
       </div>
 
@@ -969,7 +965,6 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
         </div>
         <div class="doc-actions">
           <button class="doc-btn doc-btn-primary" onclick="openDoc('ijazah-eki.pdf')"><i class="fa-solid fa-eye"></i> View</button>
-          <button class="doc-btn doc-btn-secondary" onclick="downloadDoc('ijazah-eki.pdf')"><i class="fa-solid fa-download"></i> Download</button>
         </div>
       </div>
 
@@ -984,7 +979,6 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
         </div>
         <div class="doc-actions">
           <button class="doc-btn doc-btn-primary" onclick="openDoc('sertifikat-etical-hack-eki.pdf')"><i class="fa-solid fa-eye"></i> View</button>
-          <button class="doc-btn doc-btn-secondary" onclick="downloadDoc('sertifikat-etical-hack-eki.pdf')"><i class="fa-solid fa-download"></i> Download</button>
         </div>
       </div>
 
@@ -999,7 +993,6 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
         </div>
         <div class="doc-actions">
           <button class="doc-btn doc-btn-primary" onclick="openDoc('sertifikat-network-eki.pdf')"><i class="fa-solid fa-eye"></i> View</button>
-          <button class="doc-btn doc-btn-secondary" onclick="downloadDoc('sertifikat-network-eki.pdf')"><i class="fa-solid fa-download"></i> Download</button>
         </div>
       </div>
 
@@ -1014,7 +1007,6 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
         </div>
         <div class="doc-actions">
           <button class="doc-btn doc-btn-primary" onclick="openDoc('sertifikat-SQA-eki.pdf')"><i class="fa-solid fa-eye"></i> View</button>
-          <button class="doc-btn doc-btn-secondary" onclick="downloadDoc('sertifikat-SQA-eki.pdf')"><i class="fa-solid fa-download"></i> Download</button>
         </div>
       </div>
     </div>
@@ -1232,20 +1224,10 @@ filterBtns.forEach(btn => {
   });
 });
 
-// Document open and download functions
+// Document open function (view only)
 function openDoc(filename) {
   const docPath = 'https://eki021.github.io/portome/docs/' + filename;
   window.open(docPath, '_blank');
-}
-
-function downloadDoc(filename) {
-  const docPath = 'https://eki021.github.io/portome/docs/' + filename;
-  const link = document.createElement('a');
-  link.href = docPath;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
 }
 </script>
 </body>
