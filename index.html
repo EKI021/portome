@@ -185,6 +185,8 @@ section.blk{position:relative;z-index:2;padding:100px 40px;max-width:1200px;marg
 .proj p{color:var(--text-dim);font-size:.95rem;margin-bottom:20px;line-height:1.7}
 .proj .stk{display:flex;flex-wrap:wrap;gap:8px}
 .proj .stk span{font-size:.8rem;padding:6px 14px;border-radius:20px;border:1px solid rgba(0,217,255,.2);color:var(--primary);background:rgba(0,217,255,.05);font-weight:500}
+.proj-link{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:10px 20px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:.9rem;transition:all .3s}
+.proj-link:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,217,255,.4)}
 
 .egrid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
 .ecard{background:var(--bg2);border:1px solid rgba(0,217,255,.1);border-radius:16px;padding:28px}
@@ -835,7 +837,7 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
 
     <div class="proj">
       <div class="pn">PROJECT 06</div>
-      <h4><i class="fa-solid fa-cash-register"></i> Point of Sale System</h4>
+      <h4><i class="fa-solid fa-cash-register"></i> KasirKu - Point of Sale System</h4>
       <p>Full-stack POS application with inventory management, sales reporting, and multi-location support. Built with PHP backend and React frontend.</p>
       <div class="stk">
         <span>PHP</span>
@@ -843,6 +845,7 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
         <span>MySQL</span>
         <span>JavaScript</span>
       </div>
+      <a href="https://kasirku.ekirinaldo86.workers.dev/" target="_blank" class="proj-link"><i class="fa-solid fa-external-link-alt"></i> Live Demo</a>
     </div>
 
     <div class="proj">
