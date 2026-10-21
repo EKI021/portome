@@ -100,6 +100,9 @@ section.blk{position:relative;z-index:2;padding:100px 40px;max-width:1200px;marg
 .sk .nm{font-size:.9rem;color:var(--text);font-weight:600;margin-bottom:8px}
 .sk .lv{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden}
 .sk .lv::after{content:"";display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));width:var(--w,70%);border-radius:2px}
+.grafana-skill{position:relative}
+.grafana-icon{animation:grafanaPulse 2s ease-in-out infinite}
+@keyframes grafanaPulse{0%,100%{transform:scale(1);filter:drop-shadow(0 4px 12px rgba(244,104,0,.3))}50%{transform:scale(1.1);filter:drop-shadow(0 6px 20px rgba(244,104,0,.6))}}
 
 .ansible-container{background:var(--bg2);border:1px solid rgba(0,217,255,.15);border-radius:20px;padding:40px;position:relative;overflow:hidden;margin-bottom:40px}
 .ansible-header{text-align:center;margin-bottom:40px}
@@ -421,6 +424,15 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
       <div class="sk"><i class="devicon-react-original ic" style="color:#61dafb"></i><div class="nm">React.js</div><div class="lv" style="--w:78%"></div></div>
       <div class="sk"><i class="devicon-javascript-plain ic" style="color:#f7df1e"></i><div class="nm">JavaScript</div><div class="lv" style="--w:82%"></div></div>
       <div class="sk"><i class="devicon-bash-plain ic" style="color:#fff"></i><div class="nm">Bash</div><div class="lv" style="--w:90%"></div></div>
+    </div>
+  </div>
+
+  <div class="sgrp rv">
+    <h3><i class="fa-solid fa-chart-line"></i> Monitoring & AI Agents</h3>
+    <div class="sgrid">
+      <div class="sk grafana-skill"><i class="fa-solid fa-chart-area ic grafana-icon" style="color:#F46800"></i><div class="nm">Grafana</div><div class="lv" style="--w:90%"></div></div>
+      <div class="sk"><i class="fa-solid fa-server ic" style="color:#00758D"></i><div class="nm">Zabbix</div><div class="lv" style="--w:88%"></div></div>
+      <div class="sk"><i class="fa-solid fa-robot ic" style="color:#00D9FF"></i><div class="nm">Hermes AI Agent</div><div class="lv" style="--w:85%"></div></div>
     </div>
   </div>
 </section>
