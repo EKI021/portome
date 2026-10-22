@@ -229,7 +229,7 @@ section.blk{position:relative;z-index:2;padding:100px 40px;max-width:1200px;marg
 .topo-pc-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:20px;background:rgba(0,255,65,.03);border:1px solid rgba(0,255,65,.1);border-radius:14px}
 .topo-pc-visual{background:var(--bg3);border:1px solid rgba(0,255,65,.2);border-radius:12px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:8px;transition:all .3s}
 .topo-pc-visual:hover{border-color:var(--primary);box-shadow:0 0 15px rgba(0,255,65,.2);transform:translateY(-3px)}
-.topo-pc-visual i{font-size:2rem;color:var(--primary)}
+.topo-pc-visual .pc-svg{width:80px;height:70px}
 .topo-pc-visual span{font-size:.7rem;color:var(--text-dim);text-align:center;font-weight:600}
 @media (max-width:768px){.topo-pc-row{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:480px){.topo-pc-row{grid-template-columns:1fr}}
@@ -898,23 +898,93 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
 
       <div class="topo-pc-row">
         <div class="topo-pc-visual">
-          <i class="fa-solid fa-desktop"></i>
+          <svg class="pc-svg" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="5" width="100" height="65" rx="4" fill="#1a2a1a" stroke="#00ff41" stroke-width="1.5"/>
+            <rect x="15" y="10" width="90" height="55" rx="2" fill="#0a1a0a"/>
+            <rect x="18" y="13" width="84" height="49" rx="1" fill="#0d2a0d" opacity="0.8"/>
+            <text x="60" y="42" text-anchor="middle" fill="#00ff41" font-size="8" font-family="monospace">AGENT</text>
+            <text x="60" y="52" text-anchor="middle" fill="#00ff41" font-size="7" font-family="monospace">1-25</text>
+            <rect x="45" y="70" width="30" height="4" rx="1" fill="#1a2a1a" stroke="#00ff41" stroke-width="1"/>
+            <rect x="35" y="74" width="50" height="4" rx="2" fill="#1a2a1a" stroke="#00ff41" stroke-width="1"/>
+            <rect x="25" y="80" width="70" height="12" rx="2" fill="#1a2a1a" stroke="#00ff41" stroke-width="1"/>
+            <rect x="30" y="83" width="12" height="6" rx="1" fill="#0a1a0a"/>
+            <rect x="45" y="83" width="12" height="6" rx="1" fill="#0a1a0a"/>
+            <rect x="60" y="83" width="12" height="6" rx="1" fill="#0a1a0a"/>
+            <rect x="75" y="83" width="12" height="6" rx="1" fill="#0a1a0a"/>
+            <circle cx="90" cy="86" r="2" fill="#00ff41"/>
+          </svg>
           <span>Agent PC 1-25</span>
         </div>
         <div class="topo-pc-visual">
-          <i class="fa-solid fa-desktop"></i>
+          <svg class="pc-svg" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="5" width="100" height="65" rx="4" fill="#1a2a1a" stroke="#00d4ff" stroke-width="1.5"/>
+            <rect x="15" y="10" width="90" height="55" rx="2" fill="#0a1a1a"/>
+            <rect x="18" y="13" width="84" height="49" rx="1" fill="#0d1a2a" opacity="0.8"/>
+            <text x="60" y="42" text-anchor="middle" fill="#00d4ff" font-size="8" font-family="monospace">AGENT</text>
+            <text x="60" y="52" text-anchor="middle" fill="#00d4ff" font-size="7" font-family="monospace">26-50</text>
+            <rect x="45" y="70" width="30" height="4" rx="1" fill="#1a2a1a" stroke="#00d4ff" stroke-width="1"/>
+            <rect x="35" y="74" width="50" height="4" rx="2" fill="#1a2a1a" stroke="#00d4ff" stroke-width="1"/>
+            <rect x="25" y="80" width="70" height="12" rx="2" fill="#1a2a1a" stroke="#00d4ff" stroke-width="1"/>
+            <rect x="30" y="83" width="12" height="6" rx="1" fill="#0a1a1a"/>
+            <rect x="45" y="83" width="12" height="6" rx="1" fill="#0a1a1a"/>
+            <rect x="60" y="83" width="12" height="6" rx="1" fill="#0a1a1a"/>
+            <rect x="75" y="83" width="12" height="6" rx="1" fill="#0a1a1a"/>
+            <circle cx="90" cy="86" r="2" fill="#00d4ff"/>
+          </svg>
           <span>Agent PC 26-50</span>
         </div>
         <div class="topo-pc-visual">
-          <i class="fa-solid fa-desktop"></i>
+          <svg class="pc-svg" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="5" width="100" height="65" rx="4" fill="#1a2a1a" stroke="#7c3aed" stroke-width="1.5"/>
+            <rect x="15" y="10" width="90" height="55" rx="2" fill="#1a0a2a"/>
+            <rect x="18" y="13" width="84" height="49" rx="1" fill="#2a0d3a" opacity="0.8"/>
+            <text x="60" y="42" text-anchor="middle" fill="#7c3aed" font-size="8" font-family="monospace">AGENT</text>
+            <text x="60" y="52" text-anchor="middle" fill="#7c3aed" font-size="7" font-family="monospace">51-75</text>
+            <rect x="45" y="70" width="30" height="4" rx="1" fill="#1a2a1a" stroke="#7c3aed" stroke-width="1"/>
+            <rect x="35" y="74" width="50" height="4" rx="2" fill="#1a2a1a" stroke="#7c3aed" stroke-width="1"/>
+            <rect x="25" y="80" width="70" height="12" rx="2" fill="#1a2a1a" stroke="#7c3aed" stroke-width="1"/>
+            <rect x="30" y="83" width="12" height="6" rx="1" fill="#1a0a2a"/>
+            <rect x="45" y="83" width="12" height="6" rx="1" fill="#1a0a2a"/>
+            <rect x="60" y="83" width="12" height="6" rx="1" fill="#1a0a2a"/>
+            <rect x="75" y="83" width="12" height="6" rx="1" fill="#1a0a2a"/>
+            <circle cx="90" cy="86" r="2" fill="#7c3aed"/>
+          </svg>
           <span>Agent PC 51-75</span>
         </div>
         <div class="topo-pc-visual">
-          <i class="fa-solid fa-desktop"></i>
+          <svg class="pc-svg" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="5" width="100" height="65" rx="4" fill="#1a2a1a" stroke="#f59e0b" stroke-width="1.5"/>
+            <rect x="15" y="10" width="90" height="55" rx="2" fill="#1a1a0a"/>
+            <rect x="18" y="13" width="84" height="49" rx="1" fill="#2a2a0d" opacity="0.8"/>
+            <text x="60" y="42" text-anchor="middle" fill="#f59e0b" font-size="8" font-family="monospace">AGENT</text>
+            <text x="60" y="52" text-anchor="middle" fill="#f59e0b" font-size="7" font-family="monospace">76-100</text>
+            <rect x="45" y="70" width="30" height="4" rx="1" fill="#1a2a1a" stroke="#f59e0b" stroke-width="1"/>
+            <rect x="35" y="74" width="50" height="4" rx="2" fill="#1a2a1a" stroke="#f59e0b" stroke-width="1"/>
+            <rect x="25" y="80" width="70" height="12" rx="2" fill="#1a2a1a" stroke="#f59e0b" stroke-width="1"/>
+            <rect x="30" y="83" width="12" height="6" rx="1" fill="#1a1a0a"/>
+            <rect x="45" y="83" width="12" height="6" rx="1" fill="#1a1a0a"/>
+            <rect x="60" y="83" width="12" height="6" rx="1" fill="#1a1a0a"/>
+            <rect x="75" y="83" width="12" height="6" rx="1" fill="#1a1a0a"/>
+            <circle cx="90" cy="86" r="2" fill="#f59e0b"/>
+          </svg>
           <span>Agent PC 76-100</span>
         </div>
         <div class="topo-pc-visual">
-          <i class="fa-solid fa-desktop"></i>
+          <svg class="pc-svg" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="5" width="100" height="65" rx="4" fill="#1a2a1a" stroke="#ff0040" stroke-width="1.5"/>
+            <rect x="15" y="10" width="90" height="55" rx="2" fill="#1a0a0a"/>
+            <rect x="18" y="13" width="84" height="49" rx="1" fill="#2a0d0d" opacity="0.8"/>
+            <text x="60" y="42" text-anchor="middle" fill="#ff0040" font-size="8" font-family="monospace">AGENT</text>
+            <text x="60" y="52" text-anchor="middle" fill="#ff0040" font-size="7" font-family="monospace">101-125</text>
+            <rect x="45" y="70" width="30" height="4" rx="1" fill="#1a2a1a" stroke="#ff0040" stroke-width="1"/>
+            <rect x="35" y="74" width="50" height="4" rx="2" fill="#1a2a1a" stroke="#ff0040" stroke-width="1"/>
+            <rect x="25" y="80" width="70" height="12" rx="2" fill="#1a2a1a" stroke="#ff0040" stroke-width="1"/>
+            <rect x="30" y="83" width="12" height="6" rx="1" fill="#1a0a0a"/>
+            <rect x="45" y="83" width="12" height="6" rx="1" fill="#1a0a0a"/>
+            <rect x="60" y="83" width="12" height="6" rx="1" fill="#1a0a0a"/>
+            <rect x="75" y="83" width="12" height="6" rx="1" fill="#1a0a0a"/>
+            <circle cx="90" cy="86" r="2" fill="#ff0040"/>
+          </svg>
           <span>Agent PC 101-125</span>
         </div>
       </div>
