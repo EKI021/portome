@@ -472,6 +472,7 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
     <li><a href="#skills">Skills</a></li>
     <li><a href="#ansible">Ansible</a></li>
     <li><a href="#microcloud">MicroCloud</a></li>
+    <li><a href="#proxmox">Proxmox</a></li>
     <li><a href="#telebca">Tele BCA</a></li>
     <li><a href="#cabling">Cabling</a></li>
     <li><a href="#fingerhub">Finger Hub</a></li>
@@ -490,7 +491,8 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
       <p>Cloud & DevOps Engineer | IT Infrastructure Specialist with 4+ years of experience building scalable infrastructure, automating deployments, and managing complex network environments.</p>
       <div class="hero-stats">
         <div class="stat"><div class="num">4+</div><div class="label">Years Exp</div></div>
-        <div class="stat"><div class="num">140+</div><div class="label">Servers Managed</div></div>
+        <div class="stat"><div class="num">13</div><div class="label">Physical Servers</div></div>
+        <div class="stat"><div class="num">50+</div><div class="label">VM Instances</div></div>
         <div class="stat"><div class="num">99.9%</div><div class="label">Uptime</div></div>
       </div>
       <div class="hero-btns">
@@ -606,12 +608,12 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
 
 <section class="blk" id="ansible">
   <h2 class="stitle rv">Ansible Controller Deployment</h2>
-  <p class="ssub rv">Managing 140+ endpoints at PT DIKA with centralized automation</p>
+  <p class="ssub rv">Managing 13 physical servers with Proxmox virtualization at PT DIKA</p>
 
   <div class="ansible-container rv">
     <div class="ansible-header">
       <h3><i class="fa-solid fa-robot"></i> Centralized Configuration Management</h3>
-      <p>Automated deployment and configuration management for 140+ workstations across PT DIKA facilities</p>
+      <p>Automated deployment and configuration management for 50+ VM instances across 13 physical servers at PT DIKA facilities</p>
     </div>
 
     <div class="ansible-visual">
@@ -704,6 +706,95 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
       <div class="status-badge ok">
         <span class="status-dot green"></span>
         Network: MicroOVN Active
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="proxmox">
+  <h2 class="stitle rv">Proxmox Virtualization Infrastructure</h2>
+  <p class="ssub rv">13 physical servers hosting 50+ VM instances with centralized management</p>
+
+  <div class="cluster-container rv">
+    <div class="ansible-header">
+      <h3><i class="fa-solid fa-virtual-reality"></i> Proxmox VE Cluster</h3>
+      <p>Type-1 hypervisor managing multiple VMs and LXC containers across 13 bare-metal servers</p>
+    </div>
+
+    <div class="cluster-visual">
+      <div class="cluster-node" style="background:linear-gradient(135deg,#e57000,#ff9500);">
+        <i class="fa-solid fa-server"></i>
+        <div class="node-name">Proxmox Node 1</div>
+        <div class="node-status">4 VMs</div>
+      </div>
+      <div class="cluster-node" style="background:linear-gradient(135deg,#e57000,#ff9500);">
+        <i class="fa-solid fa-server"></i>
+        <div class="node-name">Proxmox Node 2</div>
+        <div class="node-status">4 VMs</div>
+      </div>
+      <div class="cluster-node" style="background:linear-gradient(135deg,#e57000,#ff9500);">
+        <i class="fa-solid fa-server"></i>
+        <div class="node-name">Proxmox Node 3</div>
+        <div class="node-status">4 VMs</div>
+      </div>
+      <div class="cluster-node" style="background:linear-gradient(135deg,#e57000,#ff9500);">
+        <i class="fa-solid fa-server"></i>
+        <div class="node-name">Proxmox Node 4</div>
+        <div class="node-status">4 VMs</div>
+      </div>
+      <div class="cluster-node" style="background:linear-gradient(135deg,#e57000,#ff9500);">
+        <i class="fa-solid fa-server"></i>
+        <div class="node-name">+ 9 More</div>
+        <div class="node-status">34 VMs</div>
+      </div>
+    </div>
+
+    <div class="cluster-status">
+      <div class="status-badge ok">
+        <span class="status-dot green"></span>
+        Physical Servers: 13
+      </div>
+      <div class="status-badge ok">
+        <span class="status-dot green"></span>
+        VM Instances: 50+
+      </div>
+      <div class="status-badge ok">
+        <span class="status-dot green"></span>
+        Hypervisor: Proxmox VE
+      </div>
+      <div class="status-badge ok">
+        <span class="status-dot green"></span>
+        Storage: LVM/ZFS
+      </div>
+    </div>
+  </div>
+
+  <div class="ansible-container rv" style="margin-top:20px;">
+    <div class="ansible-header">
+      <h3><i class="fa-solid fa-microchip"></i> Virtualization Stack</h3>
+      <p>Complete Proxmox infrastructure with KVM virtualization and LXC containers</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;">
+      <div style="background:var(--bg3);border:1px solid rgba(229,112,0,.2);border-radius:12px;padding:20px;text-align:center;">
+        <i class="fa-solid fa-server" style="font-size:2rem;color:#e57000;margin-bottom:10px;"></i>
+        <div style="font-size:1.5rem;font-weight:700;color:var(--primary);">13</div>
+        <div style="font-size:.8rem;color:var(--text-dim);">Bare Metal Servers</div>
+      </div>
+      <div style="background:var(--bg3);border:1px solid rgba(229,112,0,.2);border-radius:12px;padding:20px;text-align:center;">
+        <i class="fa-solid fa-virtual-reality" style="font-size:2rem;color:#e57000;margin-bottom:10px;"></i>
+        <div style="font-size:1.5rem;font-weight:700;color:var(--primary);">50+</div>
+        <div style="font-size:.8rem;color:var(--text-dim);">VM Instances</div>
+      </div>
+      <div style="background:var(--bg3);border:1px solid rgba(229,112,0,.2);border-radius:12px;padding:20px;text-align:center;">
+        <i class="fa-brands fa-linux" style="font-size:2rem;color:#e57000;margin-bottom:10px;"></i>
+        <div style="font-size:1.5rem;font-weight:700;color:var(--primary);">KVM</div>
+        <div style="font-size:.8rem;color:var(--text-dim);">Full Virtualization</div>
+      </div>
+      <div style="background:var(--bg3);border:1px solid rgba(229,112,0,.2);border-radius:12px;padding:20px;text-align:center;">
+        <i class="fa-solid fa-box" style="font-size:2rem;color:#e57000;margin-bottom:10px;"></i>
+        <div style="font-size:1.5rem;font-weight:700;color:var(--primary);">LXC</div>
+        <div style="font-size:.8rem;color:var(--text-dim);">Lightweight Containers</div>
       </div>
     </div>
   </div>
@@ -990,7 +1081,7 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
       <div class="tco">PT DANAMAS INSAN KREASI ANDALAN</div>
       <ul class="tlist">
         <li>Deployed and managed OpenStack private cloud infrastructure for enterprise workloads</li>
-        <li>Implemented Ansible automation for 140+ endpoints, reducing deployment time by 80%</li>
+        <li>Implemented Ansible automation for 50+ VM instances on 13 physical servers, reducing deployment time by 80%</li>
         <li>Designed and deployed MicroCloud 3-node cluster with high availability and auto-failover</li>
         <li>Created CI/CD pipelines using GitHub Actions and Jenkins for automated application deployment</li>
         <li>Managed MikroTik network infrastructure with BGP routing and high availability setup</li>
@@ -1005,7 +1096,7 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
       </div>
       <div class="tco">PT DANAMAS INSAN KREASI ANDALAN</div>
       <ul class="tlist">
-        <li>Led IT support team managing 140+ workstations and network infrastructure</li>
+        <li>Led IT support team managing 50+ VM instances, 13 physical servers, and network infrastructure</li>
         <li>Configured and maintained Samba Active Directory for centralized authentication</li>
         <li>Designed and implemented structured cabling for server room with proper cable management</li>
         <li>Deployed and managed Windows Server infrastructure (AD, DNS, DHCP, File Server)</li>
@@ -1051,7 +1142,7 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
     <div class="proj">
       <div class="pn">PROJECT 02</div>
       <h4><i class="fa-solid fa-robot"></i> Ansible Automation Suite</h4>
-      <p>Comprehensive automation framework managing 140+ endpoints. Includes configuration management, application deployment, security hardening, and compliance reporting.</p>
+      <p>Comprehensive automation framework managing 50+ VM instances across 13 physical servers. Includes configuration management, application deployment, security hardening, and compliance reporting.</p>
       <div class="stk">
         <span>Ansible</span>
         <span>Python</span>
