@@ -425,19 +425,17 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
 .doc-viewer-close{background:rgba(255,0,64,.2);border:1px solid rgba(255,0,64,.4);color:#ff4060;width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .3s}
 .doc-viewer-close:hover{background:rgba(255,0,64,.4);transform:scale(1.1)}
 .doc-viewer-body{position:relative;width:95%;max-width:1000px;height:80vh;background:#1a1a1a;border:1px solid rgba(0,255,65,.2);border-top:none;border-radius:0 0 12px 12px;overflow:hidden;display:flex;flex-direction:column}
-.doc-viewer-toolbar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:rgba(0,0,0,.5);border-bottom:1px solid rgba(0,255,65,.2);gap:10px;flex-shrink:0;z-index:30;position:relative}
-.doc-viewer-toolbar .page-info{color:var(--text-dim);font-size:.85rem;font-family:var(--mono);min-width:100px;text-align:center}
-.doc-viewer-toolbar .toolbar-btn{background:rgba(0,255,65,.1);border:1px solid rgba(0,255,65,.3);color:var(--primary);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:.85rem;transition:all .2s;display:flex;align-items:center;gap:6px;font-family:var(--mono);z-index:31;position:relative}
-.doc-viewer-toolbar .toolbar-btn:hover:not(:disabled){background:rgba(0,255,65,.25);transform:translateY(-1px)}
+.doc-viewer-toolbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:linear-gradient(135deg,rgba(0,0,0,.8),rgba(0,20,0,.8));border-bottom:2px solid rgba(0,255,65,.3);gap:10px;flex-shrink:0;position:relative;z-index:100}
+.doc-viewer-toolbar .page-info{color:var(--primary);font-size:.9rem;font-family:var(--mono);min-width:120px;text-align:center;font-weight:600}
+.doc-viewer-toolbar .toolbar-btn{background:linear-gradient(135deg,rgba(0,255,65,.15),rgba(0,212,255,.15));border:1px solid rgba(0,255,65,.4);color:var(--primary);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:.9rem;font-weight:600;transition:all .3s;display:flex;align-items:center;gap:8px;font-family:var(--mono);position:relative;z-index:101}
+.doc-viewer-toolbar .toolbar-btn:hover:not(:disabled){background:linear-gradient(135deg,rgba(0,255,65,.3),rgba(0,212,255,.3));transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,255,65,.4)}
+.doc-viewer-toolbar .toolbar-btn:active:not(:disabled){transform:translateY(0)}
 .doc-viewer-toolbar .toolbar-btn:disabled{opacity:.3;cursor:not-allowed}
-.doc-viewer-canvas-wrap{flex:1;overflow:auto;position:relative;background:#0d0d0d;display:flex;flex-direction:column;align-items:center;padding:20px;gap:16px;z-index:1}
-.doc-viewer-canvas-wrap::-webkit-scrollbar{width:10px}
+.doc-viewer-canvas-wrap{flex:1;overflow:auto;position:relative;background:#0d0d0d;display:flex;flex-direction:column;align-items:center;padding:20px;gap:16px}
+.doc-viewer-canvas-wrap::-webkit-scrollbar{width:12px}
 .doc-viewer-canvas-wrap::-webkit-scrollbar-track{background:#0a0f0a}
-.doc-viewer-canvas-wrap::-webkit-scrollbar-thumb{background:rgba(0,255,65,.3);border-radius:5px}
-.doc-viewer-canvas-wrap canvas{width:auto;height:auto;max-width:none;box-shadow:0 4px 20px rgba(0,0,0,.5);border:1px solid rgba(0,255,65,.1);display:block;flex-shrink:0;position:relative;z-index:2}
-/* Shield only covers canvas area, not toolbar */
-.doc-viewer-shield{position:absolute;top:0;left:0;right:0;bottom:0;z-index:3;pointer-events:none}
-.doc-viewer-canvas-wrap .doc-viewer-shield{pointer-events:auto;background:transparent;cursor:default}
+.doc-viewer-canvas-wrap::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--primary),var(--secondary));border-radius:6px}
+.doc-viewer-canvas-wrap canvas{display:block;flex-shrink:0;box-shadow:0 8px 32px rgba(0,255,65,.2);border:2px solid rgba(0,255,65,.3)}
 .doc-viewer-loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.8);color:var(--primary);font-family:var(--mono);gap:16px;z-index:20}
 .doc-viewer-loading .spinner{width:50px;height:50px;border:3px solid rgba(0,255,65,.2);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -447,8 +445,6 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
 .doc-viewer-watermark{position:absolute;inset:0;pointer-events:none;z-index:10;overflow:hidden;user-select:none;-webkit-user-select:none}
 .doc-viewer-watermark::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 200px,rgba(0,255,65,.02) 200px,rgba(0,255,65,.02) 201px)}
 .watermark-text{position:absolute;font-size:1.4rem;font-weight:700;color:rgba(0,255,65,.08);white-space:nowrap;transform:rotate(-35deg);user-select:none;-webkit-user-select:none;pointer-events:none;font-family:var(--mono);letter-spacing:3px}
-/* Transparent overlay to block interactions */
-.doc-viewer-shield{position:absolute;inset:0;z-index:5;background:transparent;cursor:default}
 /* Warning bar */
 .doc-viewer-warning{width:95%;max-width:1000px;margin-top:8px;padding:8px 16px;background:rgba(255,0,64,.1);border:1px solid rgba(255,0,64,.3);border-radius:8px;color:#ff6080;font-size:.75rem;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px}
 /* Disable selection on viewer */
@@ -1811,6 +1807,7 @@ function closeDocViewer() {
 }
 
 async function renderPage(pageNum, totalPages) {
+  console.log('renderPage called, pageNum:', pageNum, 'currentScale:', currentScale);
   if (!pdfDoc || isRendering) {
     pendingPage = pageNum;
     return;
@@ -1828,9 +1825,11 @@ async function renderPage(pageNum, totalPages) {
       const viewport = page.getViewport({scale: 1.0});
       const fitScale = containerWidth / viewport.width;
       currentScale = Math.min(Math.max(fitScale, 0.75), 2.0);
+      console.log('auto-fit scale:', currentScale);
     }
     
     const viewport = page.getViewport({scale: currentScale});
+    console.log('viewport size:', viewport.width, 'x', viewport.height);
 
     const canvasWrap = document.getElementById('canvasWrap');
     const oldCanvas = canvasWrap.querySelector(`canvas[data-page="${pageNum}"]`);
@@ -1845,6 +1844,7 @@ async function renderPage(pageNum, totalPages) {
     canvas.ondragstart = () => false;
 
     canvasWrap.appendChild(canvas);
+    console.log('canvas created with size:', canvas.width, 'x', canvas.height);
 
     await page.render({canvasContext: ctx, viewport: viewport}).promise;
     drawWatermark(ctx, canvas.width, canvas.height, pageNum);
@@ -1923,22 +1923,34 @@ function nextPage() {
 }
 
 function zoomIn() {
-  if (!pdfDoc) return;
+  console.log('zoomIn called, currentScale:', currentScale);
+  if (!pdfDoc) {
+    console.log('pdfDoc is null');
+    return;
+  }
   currentScale = Math.min(currentScale + 0.25, 3.5);
+  console.log('new currentScale:', currentScale);
   refreshAllPages();
 }
 
 function zoomOut() {
-  if (!pdfDoc) return;
+  console.log('zoomOut called, currentScale:', currentScale);
+  if (!pdfDoc) {
+    console.log('pdfDoc is null');
+    return;
+  }
   currentScale = Math.max(currentScale - 0.25, 0.75);
+  console.log('new currentScale:', currentScale);
   refreshAllPages();
 }
 
 async function refreshAllPages() {
+  console.log('refreshAllPages called, pdfDoc:', !!pdfDoc, 'currentScale:', currentScale);
   if (!pdfDoc) return;
   const canvasWrap = document.getElementById('canvasWrap');
   const canvases = canvasWrap.querySelectorAll('canvas');
   const pages = Array.from(canvases).map(c => parseInt(c.getAttribute('data-page')));
+  console.log('removing', canvases.length, 'canvases, pages:', pages);
   canvases.forEach(c => c.remove());
   for (const p of pages) {
     await renderPage(p, pdfDoc.numPages);
