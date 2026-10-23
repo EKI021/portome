@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
 :root{
   --bg:#0a0f0a;--bg2:#0d1a0d;--bg3:#112211;
@@ -423,8 +424,22 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
 .doc-viewer-badge{background:rgba(255,0,64,.15);color:#ff4060;padding:4px 10px;border-radius:8px;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px}
 .doc-viewer-close{background:rgba(255,0,64,.2);border:1px solid rgba(255,0,64,.4);color:#ff4060;width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .3s}
 .doc-viewer-close:hover{background:rgba(255,0,64,.4);transform:scale(1.1)}
-.doc-viewer-body{position:relative;width:95%;max-width:1000px;height:80vh;background:#1a1a1a;border:1px solid rgba(0,255,65,.2);border-top:none;border-radius:0 0 12px 12px;overflow:hidden}
-.doc-viewer-body iframe{width:100%;height:100%;border:none;pointer-events:auto}
+.doc-viewer-body{position:relative;width:95%;max-width:1000px;height:80vh;background:#1a1a1a;border:1px solid rgba(0,255,65,.2);border-top:none;border-radius:0 0 12px 12px;overflow:hidden;display:flex;flex-direction:column}
+.doc-viewer-toolbar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:rgba(0,0,0,.5);border-bottom:1px solid rgba(0,255,65,.2);gap:10px;flex-shrink:0}
+.doc-viewer-toolbar .page-info{color:var(--text-dim);font-size:.85rem;font-family:var(--mono);min-width:100px;text-align:center}
+.doc-viewer-toolbar .toolbar-btn{background:rgba(0,255,65,.1);border:1px solid rgba(0,255,65,.3);color:var(--primary);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:.85rem;transition:all .2s;display:flex;align-items:center;gap:6px;font-family:var(--mono)}
+.doc-viewer-toolbar .toolbar-btn:hover:not(:disabled){background:rgba(0,255,65,.25);transform:translateY(-1px)}
+.doc-viewer-toolbar .toolbar-btn:disabled{opacity:.3;cursor:not-allowed}
+.doc-viewer-canvas-wrap{flex:1;overflow:auto;position:relative;background:#0d0d0d;display:flex;flex-direction:column;align-items:center;padding:20px;gap:16px}
+.doc-viewer-canvas-wrap::-webkit-scrollbar{width:10px}
+.doc-viewer-canvas-wrap::-webkit-scrollbar-track{background:#0a0f0a}
+.doc-viewer-canvas-wrap::-webkit-scrollbar-thumb{background:rgba(0,255,65,.3);border-radius:5px}
+.doc-viewer-canvas-wrap canvas{max-width:100%;height:auto;box-shadow:0 4px 20px rgba(0,0,0,.5);border:1px solid rgba(0,255,65,.1);display:block;position:relative}
+.doc-viewer-loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.8);color:var(--primary);font-family:var(--mono);gap:16px;z-index:20}
+.doc-viewer-loading .spinner{width:50px;height:50px;border:3px solid rgba(0,255,65,.2);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.doc-viewer-error{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.9);color:#ff4060;font-family:var(--mono);gap:12px;z-index:20;text-align:center;padding:20px}
+.doc-viewer-error i{font-size:3rem}
 /* Watermark overlay - prevents clean screenshots */
 .doc-viewer-watermark{position:absolute;inset:0;pointer-events:none;z-index:10;overflow:hidden;user-select:none;-webkit-user-select:none}
 .doc-viewer-watermark::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 200px,rgba(0,255,65,.02) 200px,rgba(0,255,65,.02) 201px)}
@@ -1726,54 +1741,195 @@ filterBtns.forEach(btn => {
   });
 });
 
-// Protected Document Viewer (view only - no download, no screenshot)
-function openDoc(filename) {
+// Protected Document Viewer using PDF.js (view only - renders to canvas, no download possible)
+let pdfDoc = null;
+let currentPage = 1;
+let currentScale = 1.5;
+let isRendering = false;
+let pendingPage = null;
+
+// Set PDF.js worker
+if (window.pdfjsLib) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+async function openDoc(filename) {
   const docPath = 'https://raw.githubusercontent.com/EKI021/portome/main/docs/' + filename;
   const viewer = document.getElementById('docViewer');
-  const iframe = document.getElementById('docViewerFrame');
   const titleEl = document.getElementById('docViewerTitle');
-  const watermarkContainer = document.getElementById('docViewerWatermark');
+  const canvasWrap = document.getElementById('canvasWrap');
+  const loading = document.getElementById('docLoading');
 
-  // Set title
   const docName = filename.replace('.pdf','').replace(/-/g,' ').replace(/\b\w/g, c => c.toUpperCase());
   titleEl.innerHTML = '<i class="fa-solid fa-file-shield"></i> ' + docName;
 
-  // Generate watermarks
-  watermarkContainer.innerHTML = '';
-  const wmTexts = [
-    'CONFIDENTIAL • VIEW ONLY',
-    'EKI RINALDO • PORTFOLIO',
-    'DO NOT COPY • VIEW ONLY',
-    'CONFIDENTIAL • VIEW ONLY',
-    'EKI RINALDO • PORTFOLIO',
-    'DO NOT COPY • VIEW ONLY',
-    'CONFIDENTIAL • VIEW ONLY',
-    'EKI RINALDO • PORTFOLIO',
-    'DO NOT COPY • VIEW ONLY'
-  ];
-  wmTexts.forEach((text, i) => {
-    const span = document.createElement('span');
-    span.className = 'watermark-text';
-    span.textContent = text;
-    span.style.top = (i * 12 + 5) + '%';
-    span.style.left = (i % 3 === 0 ? '-5%' : i % 3 === 1 ? '20%' : '50%');
-    watermarkContainer.appendChild(span);
-  });
+  canvasWrap.querySelectorAll('canvas').forEach(c => c.remove());
+  canvasWrap.querySelectorAll('.doc-viewer-error').forEach(e => e.remove());
+  loading.style.display = 'flex';
 
-  // Load PDF in iframe
-  iframe.src = docPath;
+  currentPage = 1;
+  currentScale = 1.5;
 
-  // Show viewer
   viewer.classList.add('active');
   document.body.style.overflow = 'hidden';
+
+  try {
+    const response = await fetch(docPath);
+    if (!response.ok) throw new Error('Failed to load document');
+    const data = await response.arrayBuffer();
+
+    pdfDoc = await pdfjsLib.getDocument({data}).promise;
+    const totalPages = pdfDoc.numPages;
+    updatePageInfo(totalPages);
+
+    loading.style.display = 'none';
+    await renderPage(1, totalPages);
+  } catch (err) {
+    console.error('PDF load error:', err);
+    loading.style.display = 'none';
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'doc-viewer-error';
+    errorDiv.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i><div>Failed to load document</div><div style="font-size:.8rem;color:var(--text-dim)">${err.message || 'Please try again later'}</div>`;
+    canvasWrap.appendChild(errorDiv);
+  }
 }
 
 function closeDocViewer() {
   const viewer = document.getElementById('docViewer');
-  const iframe = document.getElementById('docViewerFrame');
+  const canvasWrap = document.getElementById('canvasWrap');
+  canvasWrap.querySelectorAll('canvas').forEach(c => c.remove());
+  canvasWrap.querySelectorAll('.doc-viewer-error').forEach(e => e.remove());
+  pdfDoc = null;
+  currentPage = 1;
+  pendingPage = null;
+  isRendering = false;
   viewer.classList.remove('active');
-  iframe.src = 'about:blank';
   document.body.style.overflow = '';
+}
+
+async function renderPage(pageNum, totalPages) {
+  if (!pdfDoc || isRendering) {
+    pendingPage = pageNum;
+    return;
+  }
+  isRendering = true;
+  totalPages = totalPages || pdfDoc.numPages;
+
+  try {
+    const page = await pdfDoc.getPage(pageNum);
+    const viewport = page.getViewport({scale: currentScale});
+
+    const canvasWrap = document.getElementById('canvasWrap');
+    const oldCanvas = canvasWrap.querySelector(`canvas[data-page="${pageNum}"]`);
+    if (oldCanvas) oldCanvas.remove();
+
+    const canvas = document.createElement('canvas');
+    canvas.setAttribute('data-page', pageNum);
+    const ctx = canvas.getContext('2d');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    canvas.oncontextmenu = () => false;
+    canvas.ondragstart = () => false;
+
+    canvasWrap.appendChild(canvas);
+
+    await page.render({canvasContext: ctx, viewport: viewport}).promise;
+    drawWatermark(ctx, canvas.width, canvas.height, pageNum);
+
+    canvas.scrollIntoView({behavior: 'smooth', block: 'center'});
+    currentPage = pageNum;
+    updatePageInfo(totalPages);
+  } catch (err) {
+    console.error('Render error:', err);
+  }
+
+  isRendering = false;
+  if (pendingPage !== null) {
+    const p = pendingPage;
+    pendingPage = null;
+    renderPage(p, totalPages);
+  }
+}
+
+function drawWatermark(ctx, width, height, pageNum) {
+  ctx.save();
+  ctx.globalAlpha = 0.08;
+  ctx.font = 'bold 24px JetBrains Mono, monospace';
+  ctx.fillStyle = '#00ff41';
+  ctx.textAlign = 'center';
+
+  const texts = ['CONFIDENTIAL • VIEW ONLY', 'EKI RINALDO • PORTFOLIO', 'DO NOT COPY'];
+  for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 4; j++) {
+      ctx.save();
+      ctx.translate((width / 4) * i + width / 8, (height / 3) * j + height / 6);
+      ctx.rotate(-Math.PI / 6);
+      ctx.fillText(texts[(i + j) % texts.length], 0, 0);
+      ctx.restore();
+    }
+  }
+
+  ctx.globalAlpha = 0.15;
+  ctx.font = 'bold 14px JetBrains Mono, monospace';
+  ctx.fillText(`Protected Page ${pageNum}`, width / 2, height - 20);
+  ctx.restore();
+}
+
+function updatePageInfo(totalPages) {
+  document.getElementById('pageInfo').textContent = `Page ${currentPage} / ${totalPages}`;
+  document.getElementById('btnPrevPage').disabled = currentPage <= 1;
+  document.getElementById('btnNextPage').disabled = currentPage >= totalPages;
+}
+
+function prevPage() {
+  if (!pdfDoc || currentPage <= 1) return;
+  const canvasWrap = document.getElementById('canvasWrap');
+  const prevNum = currentPage - 1;
+  const existing = canvasWrap.querySelector(`canvas[data-page="${prevNum}"]`);
+  if (existing) {
+    existing.scrollIntoView({behavior: 'smooth', block: 'center'});
+    currentPage = prevNum;
+    updatePageInfo(pdfDoc.numPages);
+  } else {
+    renderPage(prevNum, pdfDoc.numPages);
+  }
+}
+
+function nextPage() {
+  if (!pdfDoc || currentPage >= pdfDoc.numPages) return;
+  const canvasWrap = document.getElementById('canvasWrap');
+  const nextNum = currentPage + 1;
+  const existing = canvasWrap.querySelector(`canvas[data-page="${nextNum}"]`);
+  if (existing) {
+    existing.scrollIntoView({behavior: 'smooth', block: 'center'});
+    currentPage = nextNum;
+    updatePageInfo(pdfDoc.numPages);
+  } else {
+    renderPage(nextNum, pdfDoc.numPages);
+  }
+}
+
+function zoomIn() {
+  if (!pdfDoc) return;
+  currentScale = Math.min(currentScale + 0.25, 3.5);
+  refreshAllPages();
+}
+
+function zoomOut() {
+  if (!pdfDoc) return;
+  currentScale = Math.max(currentScale - 0.25, 0.75);
+  refreshAllPages();
+}
+
+async function refreshAllPages() {
+  if (!pdfDoc) return;
+  const canvasWrap = document.getElementById('canvasWrap');
+  const canvases = canvasWrap.querySelectorAll('canvas');
+  const pages = Array.from(canvases).map(c => parseInt(c.getAttribute('data-page')));
+  canvases.forEach(c => c.remove());
+  for (const p of pages) {
+    await renderPage(p, pdfDoc.numPages);
+  }
 }
 
 // Protection: Disable keyboard shortcuts when viewer is open
@@ -1781,27 +1937,22 @@ document.addEventListener('keydown', function(e) {
   const viewer = document.getElementById('docViewer');
   if (!viewer || !viewer.classList.contains('active')) return;
 
-  // Block: Ctrl+S, Ctrl+P, Ctrl+Shift+I, F12, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+A, Ctrl+U
   if ((e.ctrlKey && e.key === 's') ||
       (e.ctrlKey && e.key === 'p') ||
-      (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-      (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-      (e.ctrlKey && e.shiftKey && e.key === 'C') ||
+      (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) ||
+      (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) ||
+      (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) ||
       (e.ctrlKey && e.key === 'u') ||
       (e.ctrlKey && e.key === 'a') ||
-      e.key === 'F12' ||
-      (e.ctrlKey && e.shiftKey && e.key === 'i') ||
-      (e.ctrlKey && e.shiftKey && e.key === 'j') ||
-      (e.ctrlKey && e.shiftKey && e.key === 'c')) {
+      e.key === 'F12') {
     e.preventDefault();
     e.stopPropagation();
     return false;
   }
 
-  // ESC to close
-  if (e.key === 'Escape') {
-    closeDocViewer();
-  }
+  if (e.key === 'Escape') closeDocViewer();
+  if (e.key === 'ArrowLeft') prevPage();
+  if (e.key === 'ArrowRight') nextPage();
 });
 
 // Protection: Disable right-click on viewer
@@ -1867,9 +2018,24 @@ document.addEventListener('click', function(e) {
     </div>
   </div>
   <div class="doc-viewer-body">
-    <iframe id="docViewerFrame" src="about:blank" title="Document Viewer"></iframe>
+    <div class="doc-viewer-toolbar">
+      <div style="display:flex;gap:8px">
+        <button class="toolbar-btn" id="btnPrevPage" onclick="prevPage()"><i class="fa-solid fa-chevron-left"></i> Prev</button>
+        <button class="toolbar-btn" id="btnNextPage" onclick="nextPage()">Next <i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <div class="page-info" id="pageInfo">Page 1 / 1</div>
+      <div style="display:flex;gap:8px">
+        <button class="toolbar-btn" onclick="zoomOut()"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+        <button class="toolbar-btn" onclick="zoomIn()"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+      </div>
+    </div>
+    <div class="doc-viewer-canvas-wrap" id="canvasWrap">
+      <div class="doc-viewer-loading" id="docLoading">
+        <div class="spinner"></div>
+        <div>Loading protected document...</div>
+      </div>
+    </div>
     <div class="doc-viewer-shield"></div>
-    <div class="doc-viewer-watermark" id="docViewerWatermark"></div>
   </div>
   <div class="doc-viewer-warning" id="docViewerWarning">
     <i class="fa-solid fa-lock"></i> Protected Document — View Only. Download and screenshot are disabled.
