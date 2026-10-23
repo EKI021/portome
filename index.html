@@ -412,6 +412,30 @@ footer .heart{color:var(--danger);animation:heartbeat 1.5s infinite}
 .decoration-2{width:420px;height:420px;top:50%;left:50%;transform:translate(-50%,-50%);border-style:dashed;animation:rotate 30s linear infinite reverse}
 @keyframes rotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
 @media (max-width:768px){.profile-photo-frame{width:250px;height:250px}.decoration-1{width:300px;height:300px}.decoration-2{width:340px;height:340px}}
+
+/* PROTECTED DOCUMENT VIEWER */
+.doc-viewer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;animation:fadeInOverlay .3s ease}
+.doc-viewer-overlay.active{display:flex}
+@keyframes fadeInOverlay{from{opacity:0}to{opacity:1}}
+.doc-viewer-header{width:95%;max-width:1000px;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:linear-gradient(135deg,rgba(0,255,65,.1),rgba(0,212,255,.1));border:1px solid rgba(0,255,65,.3);border-radius:12px 12px 0 0;backdrop-filter:blur(10px)}
+.doc-viewer-title{color:var(--primary);font-weight:600;font-size:.9rem;display:flex;align-items:center;gap:8px}
+.doc-viewer-title i{font-size:1.1rem}
+.doc-viewer-badge{background:rgba(255,0,64,.15);color:#ff4060;padding:4px 10px;border-radius:8px;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px}
+.doc-viewer-close{background:rgba(255,0,64,.2);border:1px solid rgba(255,0,64,.4);color:#ff4060;width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.doc-viewer-close:hover{background:rgba(255,0,64,.4);transform:scale(1.1)}
+.doc-viewer-body{position:relative;width:95%;max-width:1000px;height:80vh;background:#1a1a1a;border:1px solid rgba(0,255,65,.2);border-top:none;border-radius:0 0 12px 12px;overflow:hidden}
+.doc-viewer-body iframe{width:100%;height:100%;border:none;pointer-events:auto}
+/* Watermark overlay - prevents clean screenshots */
+.doc-viewer-watermark{position:absolute;inset:0;pointer-events:none;z-index:10;overflow:hidden;user-select:none;-webkit-user-select:none}
+.doc-viewer-watermark::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 200px,rgba(0,255,65,.02) 200px,rgba(0,255,65,.02) 201px)}
+.watermark-text{position:absolute;font-size:1.4rem;font-weight:700;color:rgba(0,255,65,.08);white-space:nowrap;transform:rotate(-35deg);user-select:none;-webkit-user-select:none;pointer-events:none;font-family:var(--mono);letter-spacing:3px}
+/* Transparent overlay to block interactions */
+.doc-viewer-shield{position:absolute;inset:0;z-index:5;background:transparent;cursor:default}
+/* Warning bar */
+.doc-viewer-warning{width:95%;max-width:1000px;margin-top:8px;padding:8px 16px;background:rgba(255,0,64,.1);border:1px solid rgba(255,0,64,.3);border-radius:8px;color:#ff6080;font-size:.75rem;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px}
+/* Disable selection on viewer */
+.doc-viewer-overlay *{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important}
+@media (max-width:768px){.doc-viewer-body{height:70vh}.doc-viewer-header{padding:10px 14px}.doc-viewer-title{font-size:.8rem}.watermark-text{font-size:1rem}}
 </style>
 </head>
 
@@ -1702,11 +1726,155 @@ filterBtns.forEach(btn => {
   });
 });
 
-// Document open function (view only)
+// Protected Document Viewer (view only - no download, no screenshot)
 function openDoc(filename) {
   const docPath = 'https://raw.githubusercontent.com/EKI021/portome/main/docs/' + filename;
-  window.open(docPath, '_blank');
+  const viewer = document.getElementById('docViewer');
+  const iframe = document.getElementById('docViewerFrame');
+  const titleEl = document.getElementById('docViewerTitle');
+  const watermarkContainer = document.getElementById('docViewerWatermark');
+
+  // Set title
+  const docName = filename.replace('.pdf','').replace(/-/g,' ').replace(/\b\w/g, c => c.toUpperCase());
+  titleEl.innerHTML = '<i class="fa-solid fa-file-shield"></i> ' + docName;
+
+  // Generate watermarks
+  watermarkContainer.innerHTML = '';
+  const wmTexts = [
+    'CONFIDENTIAL • VIEW ONLY',
+    'EKI RINALDO • PORTFOLIO',
+    'DO NOT COPY • VIEW ONLY',
+    'CONFIDENTIAL • VIEW ONLY',
+    'EKI RINALDO • PORTFOLIO',
+    'DO NOT COPY • VIEW ONLY',
+    'CONFIDENTIAL • VIEW ONLY',
+    'EKI RINALDO • PORTFOLIO',
+    'DO NOT COPY • VIEW ONLY'
+  ];
+  wmTexts.forEach((text, i) => {
+    const span = document.createElement('span');
+    span.className = 'watermark-text';
+    span.textContent = text;
+    span.style.top = (i * 12 + 5) + '%';
+    span.style.left = (i % 3 === 0 ? '-5%' : i % 3 === 1 ? '20%' : '50%');
+    watermarkContainer.appendChild(span);
+  });
+
+  // Load PDF in iframe
+  iframe.src = docPath;
+
+  // Show viewer
+  viewer.classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
+
+function closeDocViewer() {
+  const viewer = document.getElementById('docViewer');
+  const iframe = document.getElementById('docViewerFrame');
+  viewer.classList.remove('active');
+  iframe.src = 'about:blank';
+  document.body.style.overflow = '';
+}
+
+// Protection: Disable keyboard shortcuts when viewer is open
+document.addEventListener('keydown', function(e) {
+  const viewer = document.getElementById('docViewer');
+  if (!viewer || !viewer.classList.contains('active')) return;
+
+  // Block: Ctrl+S, Ctrl+P, Ctrl+Shift+I, F12, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+A, Ctrl+U
+  if ((e.ctrlKey && e.key === 's') ||
+      (e.ctrlKey && e.key === 'p') ||
+      (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+      (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+      (e.ctrlKey && e.shiftKey && e.key === 'C') ||
+      (e.ctrlKey && e.key === 'u') ||
+      (e.ctrlKey && e.key === 'a') ||
+      e.key === 'F12' ||
+      (e.ctrlKey && e.shiftKey && e.key === 'i') ||
+      (e.ctrlKey && e.shiftKey && e.key === 'j') ||
+      (e.ctrlKey && e.shiftKey && e.key === 'c')) {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+
+  // ESC to close
+  if (e.key === 'Escape') {
+    closeDocViewer();
+  }
+});
+
+// Protection: Disable right-click on viewer
+document.addEventListener('contextmenu', function(e) {
+  const viewer = document.getElementById('docViewer');
+  if (viewer && viewer.classList.contains('active')) {
+    e.preventDefault();
+    return false;
+  }
+});
+
+// Protection: Disable drag on viewer
+document.addEventListener('dragstart', function(e) {
+  const viewer = document.getElementById('docViewer');
+  if (viewer && viewer.classList.contains('active')) {
+    e.preventDefault();
+    return false;
+  }
+});
+
+// Protection: Detect PrintScreen and blank the viewer
+document.addEventListener('keyup', function(e) {
+  const viewer = document.getElementById('docViewer');
+  if (!viewer || !viewer.classList.contains('active')) return;
+  if (e.key === 'PrintScreen') {
+    e.preventDefault();
+    // Flash a warning
+    const warning = document.getElementById('docViewerWarning');
+    if (warning) {
+      warning.style.background = 'rgba(255,0,64,.4)';
+      warning.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Screenshot blocked! This document is protected.';
+      setTimeout(() => {
+        warning.style.background = 'rgba(255,0,64,.1)';
+        warning.innerHTML = '<i class="fa-solid fa-lock"></i> Protected Document — View Only. Download and screenshot are disabled.';
+      }, 2000);
+    }
+    // Try to clear clipboard
+    navigator.clipboard.writeText('').catch(()=>{});
+  }
+});
+
+// Close viewer when clicking overlay background
+document.addEventListener('click', function(e) {
+  if (e.target.id === 'docViewer') {
+    closeDocViewer();
+  }
+});
 </script>
+
+<!-- Protected Document Viewer Modal -->
+<div id="docViewer" class="doc-viewer-overlay" oncontextmenu="return false">
+  <div class="doc-viewer-header">
+    <div class="doc-viewer-title" id="docViewerTitle">
+      <i class="fa-solid fa-file-shield"></i> Document
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="doc-viewer-badge">
+        <i class="fa-solid fa-lock"></i> View Only
+      </div>
+      <button class="doc-viewer-close" onclick="closeDocViewer()" title="Close (ESC)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </div>
+  <div class="doc-viewer-body">
+    <iframe id="docViewerFrame" src="about:blank" title="Document Viewer"></iframe>
+    <div class="doc-viewer-shield"></div>
+    <div class="doc-viewer-watermark" id="docViewerWatermark"></div>
+  </div>
+  <div class="doc-viewer-warning" id="docViewerWarning">
+    <i class="fa-solid fa-lock"></i> Protected Document — View Only. Download and screenshot are disabled.
+  </div>
+</div>
+
 </body>
 </html>
